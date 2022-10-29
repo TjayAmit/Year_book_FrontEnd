@@ -1,0 +1,11 @@
+import { Text } from '../../Packges';
+
+const Instructor = () => {
+  return (
+    <>
+      <Text>Instructor</Text>
+    </>
+  );
+};
+
+export default Instructor;
