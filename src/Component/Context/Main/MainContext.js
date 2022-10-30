@@ -1,5 +1,4 @@
-import { useContext } from '../../Packges';
-import MainProvider from './MainProvider.js';
+import { useContext, MainProvider } from '../../Packages';
 
 //Custom hooks to use context data globally
 const useMain = () => {

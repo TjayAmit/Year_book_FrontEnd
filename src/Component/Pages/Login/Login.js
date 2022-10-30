@@ -1,4 +1,5 @@
-import { Text } from '../../Packges';
+// import { Text } from '../../Packages';
+import { Text } from '@chakra-ui/react';
 
 const Login = () => {
   return (

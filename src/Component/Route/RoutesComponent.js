@@ -1,18 +1,18 @@
 import {
-  useMain,
   Router,
   Route,
   Routes,
+  RouteData,
   Outlet,
   Login,
   Layout,
   useEffect,
   PageNotFound,
-  RouteData,
   ProtectedRoute,
-} from '../Packges';
+  useMain,
+} from '../Packages';
 
-const CustomRoute = () => {
+const RouteComponent = () => {
   const { user } = useMain();
 
   useEffect(() => {}, [user]);
@@ -29,7 +29,7 @@ const CustomRoute = () => {
             element={
               <Layout>
                 <Routes>
-                  {RouteData.path.map(data => {
+                  {RouteData.map(data => {
                     return (
                       <Route
                         key={data.index}
@@ -49,4 +49,4 @@ const CustomRoute = () => {
   );
 };
 
-export default CustomRoute;
+export default RouteComponent;

@@ -1,4 +1,4 @@
-import { Text } from '../../Packges';
+import { Text } from '../../Packages';
 
 const Section = () => {
   return (

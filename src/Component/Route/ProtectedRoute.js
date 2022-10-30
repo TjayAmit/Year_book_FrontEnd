@@ -1,4 +1,4 @@
-import { Navigate } from '../Packges';
+import { Navigate } from '../Packages';
 
 const ProtectedRoute = ({ user }) => {
   if (user.loggedIn) {

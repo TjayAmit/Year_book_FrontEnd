@@ -1,26 +1,26 @@
-import { createContext, useState } from '../../Packges';
+import { createContext, useState } from '../../Packages';
 
 const MainDataContext = createContext({});
 
 export const MainProvider = ({ children }) => {
   const [user, setUser] = useState({
     loggedIn: false,
-    role: '',
+    role: 0,
     name: 'Mang Juan',
-    email: 'sample@gmail.com',
   });
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
     <MainDataContext.Provider
       value={{
+        user,
+        setUser,
         email,
         setEmail,
         password,
         setPassword,
-        user,
-        setUser,
       }}
     >
       {children}

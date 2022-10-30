@@ -16,7 +16,7 @@ import {
   useMain,
   useProSidebar,
   useNavigate,
-} from '../../../Packges';
+} from '../../../Packages';
 
 const Header = ({ flip, setflip }) => {
   const { user } = useMain();

@@ -5,7 +5,7 @@ import {
   useState,
   Header,
   Sidebar,
-} from '../Packges';
+} from '../Packages';
 
 const Layout = ({ children }) => {
   const [collapse, setCollapse] = useState(false);

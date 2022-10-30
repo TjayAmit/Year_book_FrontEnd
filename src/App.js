@@ -1,8 +1,8 @@
-import { ChakraProvider, theme, React, Login } from './Component/Packges';
+import { ChakraProvider, React, Login } from './Component/Packages';
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider>
       <Login />
     </ChakraProvider>
   );
