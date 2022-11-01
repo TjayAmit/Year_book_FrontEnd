@@ -1,8 +1,14 @@
-import { useMemo } from 'react';
-import { Box, TableComponent } from '../../Packages';
+import { useMemo, useState } from 'react';
+import { Box, Flex, Heading, TableComponent } from '../../Packages';
 import { ClientData } from '../Component/SampleData';
 
 const Client = () => {
+  const [search, setSearch] = useState('');
+
+  const callBack = e => {
+    e.preventDefault();
+  };
+
   const column = useMemo(
     () => [
       {
@@ -39,7 +45,22 @@ const Client = () => {
 
   return (
     <Box w={'100%'}>
-      <TableComponent columns={column} data={ClientData} />
+      <Box w={'100%'}>
+        <Flex justifyContent={'space-between'}>
+          <Heading fontSize={32} color={'#120e63'}>
+            Client
+          </Heading>
+        </Flex>
+      </Box>
+      <TableComponent
+        columns={column}
+        data={ClientData}
+        search={search}
+        setSearch={setSearch}
+        placeholder={'Search client'}
+        button={'Client'}
+        callBack={callBack}
+      />
     </Box>
   );
 };

@@ -17,7 +17,7 @@ const StudentProfile = ({ url, name, qoute }) => {
         w={'100%'}
         h={'40%'}
         mt={2}
-        bg={'rgba(0,0,0,0.1)'}
+        bg={'rgba(18,1,99,0.12)'}
         roundedTop={10}
         p={2}
       >

@@ -1,3 +1,6 @@
+import { FaUsers } from 'react-icons/fa';
+import { GiGraduateCap, GiTeacher } from 'react-icons/gi';
+import { IoMdCloudDownload } from 'react-icons/io';
 import {
   Text,
   Box,
@@ -21,16 +24,36 @@ const Dashboard = () => {
           gap={5}
         >
           <GridItem rowSpan={[1, 1, 2, 2]} colsspan={[1, 1, 2, 2]}>
-            <CardComponent />
+            <CardComponent
+              title={'User'}
+              description={'Active users'}
+              color={'skyblue'}
+              children={<FaUsers size={'4rem'} />}
+            />
           </GridItem>
           <GridItem rowSpan={[1, 1, 2, 2]} colsspan={[1, 1, 2, 2]}>
-            <CardComponent />
+            <CardComponent
+              title={'Graduates'}
+              description={'Overall graduates recorded.'}
+              color={'pink'}
+              children={<GiGraduateCap size={'4rem'} />}
+            />
           </GridItem>
           <GridItem rowSpan={[1, 1, 2, 2]} colsspan={[1, 1, 2, 2]}>
-            <CardComponent />
+            <CardComponent
+              title={'Teachers'}
+              description={'Overall teachers.'}
+              color={'lightgreen'}
+              children={<GiTeacher size={'4rem'} />}
+            />
           </GridItem>
           <GridItem rowSpan={[1, 1, 2, 2]} colsspan={[1, 1, 2, 2]}>
-            <CardComponent />
+            <CardComponent
+              title={'Downloads'}
+              description={'Total Downloads of year book.'}
+              color={'orange'}
+              children={<IoMdCloudDownload size={'4rem'} />}
+            />
           </GridItem>
         </Grid>
         <Grid mt={10} templateColumns={['repeat(6, 1fr)']} gap={5}>
