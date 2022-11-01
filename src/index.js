@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import { MainProvider } from './Component/Context/Main/MainProvider';
 
+{
+  /* <a href="https://iconscout.com/illustrations/developer" target="_blank">Developer Illustration</a> by <a href="https://iconscout.com/contributors/manypixels-gallery" target="_blank">Manypixels Gallery</a> */
+}
+
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
 root.render(
-  <MainProvider>
-    <App />
-  </MainProvider>
+  <StrictMode>
+    <MainProvider>
+      <App />
+    </MainProvider>
+  </StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change

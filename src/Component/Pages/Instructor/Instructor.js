@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { Box, TableComponent } from '../../Packages';
-import { SectionData } from '../Component/SampleData';
+import { InstructorData } from '../Component/SampleData';
 
-const Section = () => {
+const Instructor = () => {
   const column = useMemo(
     () => [
       {
@@ -10,12 +10,16 @@ const Section = () => {
         accessor: 'id',
       },
       {
-        Header: 'SECTION',
+        Header: 'NAME',
         accessor: 'name',
       },
       {
-        Header: 'INSTRUCTOR',
-        accessor: 'instructor',
+        Header: 'ADDRESS',
+        accessor: 'address',
+      },
+      {
+        Header: 'SEX',
+        accessor: 'sex',
       },
       {
         Header: 'ACTION',
@@ -24,11 +28,12 @@ const Section = () => {
     ],
     []
   );
+
   return (
     <Box w={'100%'}>
-      <TableComponent columns={column} data={SectionData} />
+      <TableComponent columns={column} data={InstructorData} />
     </Box>
   );
 };
 
-export default Section;
+export default Instructor;

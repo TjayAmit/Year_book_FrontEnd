@@ -1,21 +1,20 @@
+import React from 'react';
+import { Login } from '../Packages';
+
 import {
-  Router,
-  Route,
+  BrowserRouter as Router,
   Routes,
-  RouteData,
+  Route,
   Outlet,
-  Login,
-  Layout,
-  useEffect,
-  PageNotFound,
-  ProtectedRoute,
-  useMain,
-} from '../Packages';
+} from 'react-router-dom';
+
+import RouteData from './RouteData.js';
+import ProtectedRoute from './ProtectedRoute.js';
+import useMain from '../Context/Main/MainContext';
+import Layout from '../Pages/Layout';
 
 const RouteComponent = () => {
   const { user } = useMain();
-
-  useEffect(() => {}, [user]);
 
   return (
     <Router>
@@ -42,7 +41,6 @@ const RouteComponent = () => {
               </Layout>
             }
           />
-          <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
     </Router>

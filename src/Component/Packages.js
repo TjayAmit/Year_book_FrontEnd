@@ -1,42 +1,47 @@
-//REACT
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { useTable, usePagination } from 'react-table';
+import {
+  ProSidebarProvider,
+  useProSidebar,
+  Menu,
+  MenuItem,
+  Sidebar,
+} from 'react-pro-sidebar';
 
-//CHAKRA
+//CHACKRA
 import {
   Avatar,
   Box,
-  ChakraProvider,
+  Button,
+  Center,
   Divider,
-  Text,
-  Flex,
   FormControl,
-  FormHelperText,
   FormLabel,
-  FormErrorIcon,
+  FormErrorMessage,
+  Flex,
+  Grid,
+  GridItem,
   Heading,
   IconButton,
+  Input,
   Image,
-  Menu,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
   MenuList,
   MenuButton,
-  MenuItem,
-  Select,
-  SkeletonText,
-  Stack,
   Table,
-  Thead,
   Tbody,
-  Tr,
-  Th,
   Td,
+  Text,
+  Th,
+  Thead,
   Tooltip,
-  Textarea,
-  theme,
-  useDisclosure,
-  useFormControl,
+  Tr,
+  Select,
+  Spacer,
+  Stack,
+  Wrap,
+  WrapItem,
   useMediaQuery,
-  useToast,
 } from '@chakra-ui/react';
 
 import {
@@ -46,174 +51,70 @@ import {
   ChevronLeftIcon,
 } from '@chakra-ui/icons';
 
-//REACT ROUTER DOM
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet,
-  useNavigate,
-  Navigate,
-} from 'react-router-dom';
-
-//ROUTE DATA
-import RouteData from './Route/RouteData.js';
-import ProtectedRoute from './Route/ProtectedRoute.js';
-import RouteComponent from './Route/RoutesComponent.js';
-
-//PRO SIDEBAR
-import { useProSidebar, ProSidebarProvider } from 'react-pro-sidebar';
-
-//SERVER REQUEST
-import {
-  LoginRequest,
-  RegisterRequest,
-  LogoutRequest,
-} from './API/Server_Request/Authentication_Request.js';
-
-import {
-  BatchPostRequest,
-  BatchPutRequest,
-  BatchDeleteRequest,
-  BatchGetRequest,
-} from './API/Server_Request/Batch_Request.js';
-
-import {
-  ClientDeleteRequest,
-  ClientPostRequest,
-  ClientGetRequest,
-  ClientPutRequest,
-} from './API/Server_Request/Client_Request.js';
-
-import {
-  InstructorDeleteRequest,
-  InstructorPostRequest,
-  InstructorGetRequest,
-  InstructorPutRequest,
-} from './API/Server_Request/Instructor_Request.js';
-
-import {
-  SectionDeleteRequest,
-  SectionGetRequest,
-  SectionPostRequest,
-  SectionPutRequest,
-} from './API/Server_Request/Section_Request';
-
-//CONTEXT
-import useMain from './Context/Main/MainContext.js';
-import MainProvider from './Context/Main/MainProvider.js';
-
-//404
-import PageNotFound from './404/PageNotFound.js';
-
-//SIDEBAR
-import Sidebar from './Pages/Component/Sidebar/Sidebar';
-
 //PAGES
 import Login from './Pages/Login/Login';
-import Layout from './Pages/Layout.js';
-import Dashboard from './Pages/Dashboard/Dashboard';
-import Instructor from './Pages/Instructor/Instructor';
-import Section from './Pages/Section/Section.js';
-import Client from './Pages/Client/Client';
-import Batch from './Pages/Batch/Batch';
 
-//PAGES COMPONENT
-import Edit from './Pages/Component/Edit/Edit.js';
-import Delete from './Pages/Component/Delete/Delete.js';
-import Header from './Pages/Component/Header/Header.js';
-import TableComponent from './Pages/Component/Table/Table_Component.js';
-// import SearchNotFound from './Pages/Component/SearchNotFound/SearchNotFound.js';
+//COMPONENT
+import CardComponent from './Pages/Component/Card/CardComponent';
+import CustomFormController from './Pages/Component/CustomFormController/CustomFormController';
+import Delete from './Pages/Component/Delete/Delete';
+import Edit from './Pages/Component/Edit/Edit';
+import Header from './Pages/Component/Header/Header';
+import LineGraph from './Pages/Component/LineGraph/LineGraph';
+import TableComponent from './Pages/Component/Table/TableComponent';
+import StudentProfile from './Pages/Component/StudentProfile/StudentProfile';
 
 export {
-  Avatar,
-  ArrowRightIcon,
   ArrowLeftIcon,
-  Batch,
-  BatchDeleteRequest,
-  BatchGetRequest,
-  BatchPostRequest,
-  BatchPutRequest,
+  ArrowRightIcon,
+  Avatar,
   Box,
-  ChakraProvider,
-  ChevronRightIcon,
+  Button,
+  CardComponent,
+  Center,
   ChevronLeftIcon,
-  Client,
-  ClientDeleteRequest,
-  ClientGetRequest,
-  ClientPostRequest,
-  ClientPutRequest,
-  createContext,
-  Dashboard,
+  ChevronRightIcon,
+  CustomFormController,
   Delete,
   Divider,
   Edit,
-  Flex,
   FormControl,
-  FormErrorIcon,
-  FormHelperText,
+  FormErrorMessage,
   FormLabel,
+  Flex,
+  Grid,
+  GridItem,
   Heading,
-  Header,
   IconButton,
   Image,
-  Instructor,
-  InstructorDeleteRequest,
-  InstructorGetRequest,
-  InstructorPostRequest,
-  InstructorPutRequest,
-  Login,
-  LoginRequest,
-  LogoutRequest,
-  Layout,
-  MainProvider,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
   Menu,
-  MenuButton,
   MenuItem,
   MenuList,
-  Navigate,
-  PageNotFound,
-  ProtectedRoute,
-  ProSidebarProvider,
-  Section,
-  SectionDeleteRequest,
-  SectionGetRequest,
-  SectionPostRequest,
-  SectionPutRequest,
-  // SearchNotFound,
-  Sidebar,
-  SkeletonText,
-  Select,
-  Stack,
-  Outlet,
-  React,
-  RegisterRequest,
-  Route,
-  Router,
-  Routes,
-  RouteComponent,
-  RouteData,
+  MenuButton,
+  Header,
+  LineGraph,
+  Login,
   TableComponent,
   Table,
-  Thead,
   Tbody,
-  Tr,
   Th,
+  Thead,
   Td,
   Text,
-  Textarea,
-  theme,
   Tooltip,
-  useContext,
-  useDisclosure,
-  useEffect,
-  useFormControl,
-  useMain,
+  Tr,
+  Select,
+  Stack,
+  Spacer,
+  Sidebar,
+  StudentProfile,
+  ProSidebarProvider,
+  Wrap,
+  WrapItem,
   useMediaQuery,
-  useNavigate,
   useProSidebar,
-  useState,
-  useToast,
-  useTable,
-  usePagination,
 };

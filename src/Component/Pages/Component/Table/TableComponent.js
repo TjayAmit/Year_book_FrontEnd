@@ -1,6 +1,8 @@
+import { useTable, usePagination } from 'react-table';
 import {
   ArrowRightIcon,
   ArrowLeftIcon,
+  Avatar,
   Box,
   ChevronRightIcon,
   ChevronLeftIcon,
@@ -17,8 +19,6 @@ import {
   Text,
   Tooltip,
   Select,
-  useTable,
-  usePagination,
 } from '../../../Packages';
 
 const TableComponent = ({ columns, data }) => {
@@ -131,6 +131,8 @@ const TableComponent = ({ columns, data }) => {
                           <Text fontWeight={'bold'} color={'green.600'}>
                             {i}
                           </Text>
+                        ) : cell.column.Header === 'PROFILE' ? (
+                          <Avatar src={cell.value} />
                         ) : (
                           cell.render('Cell')
                         )}
@@ -145,53 +147,73 @@ const TableComponent = ({ columns, data }) => {
       </div>
 
       {page.length >= 1 ? (
-        <div id="pagination">
-          <div id="btnleft">
-            <Tooltip label="First Page">
-              <IconButton
-                style={CustomBtnTheme}
-                onClick={() => gotoPage(0)}
-                isDisabled={!canPreviousPage}
-                icon={<ArrowLeftIcon h={3} w={3} />}
-                mr={4}
-              />
-            </Tooltip>
-            <Tooltip label="Previous Page">
-              <IconButton
-                style={CustomBtnTheme}
-                className="paginationbtn"
-                onClick={previousPage}
-                isDisabled={!canPreviousPage}
-                icon={<ChevronLeftIcon h={6} w={6} />}
-              />
-            </Tooltip>
-          </div>
+        <Box w={'96%'} ml={5} mr={5}>
+          <Flex justifyContent={'space-between'}>
+            <div id="btnleft">
+              <Tooltip label="First Page">
+                <IconButton
+                  bg={'grey'}
+                  rounded={100}
+                  onClick={() => gotoPage(0)}
+                  isDisabled={!canPreviousPage}
+                  icon={<ArrowLeftIcon h={3} w={3} />}
+                  mr={4}
+                />
+              </Tooltip>
+              <Tooltip label="Previous Page">
+                <IconButton
+                  bg={'grey'}
+                  rounded={100}
+                  className="paginationbtn"
+                  onClick={previousPage}
+                  isDisabled={!canPreviousPage}
+                  icon={<ChevronLeftIcon h={6} w={6} />}
+                />
+              </Tooltip>
+            </div>
+            <Box bg={''} p={2} borderRadius={5}>
+              <Flex>
+                <Box fontSize={13}>Showing Page</Box>
+                <Text fontWeight="bold" fontSize={13} ml={2} as="span">
+                  {pageIndex + 1}
+                </Text>
+                <Box ml={2} fontSize={13} w={'2rem'}>
+                  of
+                </Box>
 
-          <div id="btnright">
-            <Tooltip label="Next Page">
-              <IconButton
-                style={CustomBtnTheme}
-                className="paginationbtn"
-                onClick={nextPage}
-                isDisabled={!canNextPage}
-                icon={<ChevronRightIcon h={6} w={6} />}
-              />
-            </Tooltip>
-            <Tooltip label="Last Page">
-              <IconButton
-                style={CustomBtnTheme}
-                className="paginationbtn"
-                onClick={() => gotoPage(pageCount - 1)}
-                isDisabled={!canNextPage}
-                icon={<ArrowRightIcon h={3} w={3} />}
-                ml={4}
-              />
-            </Tooltip>
-          </div>
-        </div>
-      ) : (
-        ''
-      )}
+                <Text fontSize={13} fontWeight="bold" as="span">
+                  {pageOptions.length}
+                </Text>
+              </Flex>
+            </Box>
+
+            <div id="btnright">
+              <Tooltip label="Next Page">
+                <IconButton
+                  bg={'grey'}
+                  rounded={100}
+                  border={'grey'}
+                  className="paginationbtn"
+                  onClick={nextPage}
+                  isDisabled={!canNextPage}
+                  icon={<ChevronRightIcon h={6} w={6} />}
+                />
+              </Tooltip>
+              <Tooltip label="Last Page">
+                <IconButton
+                  bg={'grey'}
+                  rounded={100}
+                  className="paginationbtn"
+                  onClick={() => gotoPage(pageCount - 1)}
+                  isDisabled={!canNextPage}
+                  icon={<ArrowRightIcon h={3} w={3} />}
+                  ml={4}
+                />
+              </Tooltip>
+            </div>
+          </Flex>
+        </Box>
+      ) : null}
     </>
   );
 };

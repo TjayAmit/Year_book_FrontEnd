@@ -1,6 +1,6 @@
-import { createContext, useState } from '../../Packages';
+import { createContext, useState } from 'react';
 
-const MainDataContext = createContext({});
+const DataContext = createContext({});
 
 export const MainProvider = ({ children }) => {
   const [user, setUser] = useState({
@@ -13,7 +13,7 @@ export const MainProvider = ({ children }) => {
   const [password, setPassword] = useState('');
 
   return (
-    <MainDataContext.Provider
+    <DataContext.Provider
       value={{
         user,
         setUser,
@@ -24,8 +24,8 @@ export const MainProvider = ({ children }) => {
       }}
     >
       {children}
-    </MainDataContext.Provider>
+    </DataContext.Provider>
   );
 };
 
-export default MainDataContext;
+export default DataContext;

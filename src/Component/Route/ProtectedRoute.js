@@ -1,11 +1,10 @@
-import { Navigate } from '../Packages';
+import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ user }) => {
   if (user.loggedIn) {
-    return <Navigate replace to="/home" />;
-  } else {
-    return <Navigate replace to="/login" />;
+    return <Navigate replace to="/home/" />;
   }
+  return <Navigate replace to="/login" />;
 };
 
 export default ProtectedRoute;
