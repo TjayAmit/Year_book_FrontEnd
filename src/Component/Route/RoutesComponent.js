@@ -12,7 +12,10 @@ import RouteData from './RouteData.js';
 import ProtectedRoute from './ProtectedRoute.js';
 import useMain from '../Context/Main/MainContext';
 import Layout from '../Pages/Layout';
-
+import Index from '../LandingPage/Index';
+import About from '../LandingPage/About';
+import Contact from '../LandingPage/Contact';
+import Yearbook from '../LandingPage/Yearbook';
 const RouteComponent = () => {
   const { user } = useMain();
 
@@ -21,6 +24,11 @@ const RouteComponent = () => {
       <Routes>
         <Route path="/" element={<Outlet />}>
           <Route path="/" element={<ProtectedRoute user={user} />} />
+          <Route path="/Yearbook/Home" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/yearbook" element={<Yearbook />} />
+
           <Route path="/login" element={<Login />} />
 
           <Route
