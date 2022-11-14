@@ -4,7 +4,7 @@ import { ClientData } from '../Component/SampleData';
 
 const Client = () => {
   const [search, setSearch] = useState('');
-
+  const [close, setClose] = useState(false);
   const callBack = e => {
     e.preventDefault();
   };
@@ -60,6 +60,8 @@ const Client = () => {
         placeholder={'Search client'}
         button={'Client'}
         callBack={callBack}
+        close={close}
+        setClose={setClose}
       />
     </Box>
   );

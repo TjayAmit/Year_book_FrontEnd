@@ -4,6 +4,7 @@ import { BookData } from '../Component/SampleData';
 
 const Book = () => {
   const [search, setSearch] = useState('');
+  const [close, setClose] = useState(false);
 
   const callBack = e => {
     e.preventDefault();
@@ -60,6 +61,8 @@ const Book = () => {
         placeholder={'Search batch'}
         button={'Batch'}
         callBack={callBack}
+        close={close}
+        setClose={setClose}
       />
     </Box>
   );
