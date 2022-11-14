@@ -4,6 +4,7 @@ import { InstructorData } from '../Component/SampleData';
 
 const Instructor = () => {
   const [search, setSearch] = useState('');
+  const [close, setClose] = useState(false);
 
   const callBack = e => {
     e.preventDefault();
@@ -52,6 +53,8 @@ const Instructor = () => {
         placeholder={'Search name'}
         button={'Instructor'}
         callBack={callBack}
+        close={close}
+        setClose={setClose}
       />
     </Box>
   );

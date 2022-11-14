@@ -36,16 +36,21 @@
     transform: rotate(360deg);
   }
 }
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 * {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.home-container{
-  background: rgb(2,0,36);
-  background: gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,54,121,1) 49%, rgba(0,142,255,1) 100%);
+.home-container {
+  background: rgb(240, 240, 240);
+  background: gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 54, 121, 1) 49%,
+    rgba(0, 142, 255, 1) 100%
+  );
 }

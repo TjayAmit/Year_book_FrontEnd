@@ -1,6 +1,7 @@
 import { useTable, usePagination } from 'react-table';
 import { BiSearch } from 'react-icons/bi';
 import { MdAddCircleOutline } from 'react-icons/md';
+import Usermodal from '../../../Layouts/usermodal';
 import {
   ArrowRightIcon,
   ArrowLeftIcon,
@@ -26,6 +27,7 @@ import {
   Tooltip,
   Select,
 } from '../../../Packages';
+import User from '../../User/User';
 
 const TableComponent = ({
   columns,
@@ -35,6 +37,9 @@ const TableComponent = ({
   placeholder,
   button,
   callBack,
+  AddNew,
+  close,
+  setClose,
 }) => {
   const {
     getTableProps,
@@ -95,22 +100,30 @@ const TableComponent = ({
             </InputGroup>
           </Box>
           <Flex columnGap={2}>
-            <Button
-              bg={'#120e63'}
-              color={'white'}
-              _hover={{
-                bg: '#120e63',
-              }}
-              mt={5}
-              h={'32px'}
-              columnGap={2}
-              fontSize={'16'}
-              fontWeight={'400'}
-              onClick={callBack}
-            >
-              <MdAddCircleOutline size={'1.5rem'} />
-              {button}
-            </Button>
+            <Usermodal
+              AddNew={AddNew}
+              BtnOpen={
+                <Button
+                  bg={'#120e63'}
+                  color={'white'}
+                  _hover={{
+                    bg: '#120e63',
+                  }}
+                  mt={5}
+                  h={'32px'}
+                  columnGap={2}
+                  fontSize={'16'}
+                  fontWeight={'400'}
+                  onClick={callBack}
+                >
+                  <MdAddCircleOutline size={'1.5rem'} />
+                  {button}
+                </Button>
+              }
+              BtnSave={'Save ' + button}
+              close={close}
+              setClose={setClose}
+            />
             <Select
               w={32}
               mt={5}
