@@ -43,6 +43,7 @@ const CustomFormController = ({
             focusBorderColor={'#120e63'}
             onChange={e => setValue(e.target.value)}
             className={'inputs'}
+            border={'1px solid black'}
           />
           {type === 'password' ? (
             <InputRightElement width="3rem" onClick={() => setShow(!show)}>

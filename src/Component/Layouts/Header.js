@@ -10,58 +10,46 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 
+const LinkNavigation = props => {
+  const navigate = useNavigate();
+
+  const handleClick = (e, path) => {
+    e.preventDefault();
+    navigate(path);
+  };
+
+  return (
+    <Button
+      as="a"
+      variant="ghost"
+      aria-label="About"
+      my={5}
+      w="100%"
+      onClick={e => handleClick(e, props.path)}
+      _hover={{
+        textDecoration: 'underline',
+      }}
+    >
+      {props.name}
+    </Button>
+  );
+};
+
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const isLight = colorMode === 'light';
   const [display, changeDisplay] = useState('none');
-  const navigate = useNavigate();
+
   return (
     <Flex>
       <Flex position="fixed" top="1rem" right="1rem" align="center">
         {/* Desktop */}
         <Flex display={['none', 'none', 'flex', 'flex']}>
-          <Link href="/" passHref>
-            <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
-              Home
-            </Button>
-          </Link>
-
-          <Link href="/about" passHref>
-            <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">
-              About
-            </Button>
-          </Link>
-
-          <Link href="/contact" passHref>
-            <Button as="a" variant="ghost" aria-label="Contact" my={5} w="100%">
-              Contact
-            </Button>
-          </Link>
-          <Link href="/yearbook" passHref>
-            <Button
-              as="a"
-              variant="ghost"
-              aria-label="Year Book"
-              my={5}
-              w="100%"
-            >
-              Year Book
-            </Button>
-          </Link>
-          <Link href="/login" passHref>
-            <Button
-              onClick={() => {
-                navigate('/login');
-              }}
-              as="a"
-              variant="ghost"
-              aria-label="Login"
-              my={5}
-              w="100%"
-            >
-              Login
-            </Button>
-          </Link>
+          <LinkNavigation path="/" name="Home" />
+          <LinkNavigation path="/about" name="About" />
+          <LinkNavigation path="/contact" name="Contact" />
+          <LinkNavigation path="/yearbook" name="Year Book" />
+          <LinkNavigation path="/login" name="Login" />
         </Flex>
 
         {/* Mobile */}

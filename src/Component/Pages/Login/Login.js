@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FaUserAlt, FaLock } from 'react-icons/fa';
 import {
+  Avatar,
   Box,
   Button,
   CustomFormController,
@@ -21,7 +22,7 @@ const Login = () => {
 
   return (
     <>
-      <Box w={'100%'} h={'100vh'}>
+      <Box w={'100%'} h={'100vh'} bg={'#020024'}>
         <Grid
           templateRows={`repeat(1, 1fr)`}
           templateColumns={`repeat(2, 1fr)`}
@@ -38,7 +39,7 @@ const Login = () => {
                 <Box w={'30rem'} h={'25rem'} mb="20">
                   <Heading color={'#120e63'}>DPLMHS: Online Year Book</Heading>
                   <Box h={10}></Box>
-                  <Image src={require('../../../Asset/developer.png')} />
+                  <Image src={require('../../../Asset/home-bg.png')} />
                 </Box>
               </Center>
             </Box>
@@ -57,10 +58,11 @@ const Login = () => {
                   rounded={10}
                   boxShadow={'2xl'}
                   p={5}
+                  bg={'white'}
                 >
                   <Box display={'flex'} columnGap={5}>
-                    <Image
-                      w={'5rem'}
+                    <Avatar
+                      size={'lg'}
                       src={require('../../../Asset/logo.jpg')}
                     />
                     <Box mt={'2'}>
