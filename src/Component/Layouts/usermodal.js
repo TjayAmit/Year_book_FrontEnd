@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -21,6 +21,8 @@ function Usermodal({
   close,
   setClose,
   Type,
+  loading,
+  setLoading,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
@@ -49,7 +51,16 @@ function Usermodal({
             >
               Close
             </Button>
-            <Button onClick={AddNew} colorScheme={'blue'} variant="solid">
+            <Button
+              onClick={() => {
+                AddNew();
+                setLoading(true);
+              }}
+              isLoading={loading ? true : false}
+              // loadingText="Submitting"
+              colorScheme={'blue'}
+              variant="solid"
+            >
               {BtnSave}
             </Button>
           </ModalFooter>

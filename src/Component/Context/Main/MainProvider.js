@@ -14,6 +14,9 @@ export const MainProvider = ({ children }) => {
   const [firstname, SetFirstname] = useState('');
   const [lastname, SetLastname] = useState('');
   const [contact, SetContact] = useState('');
+  const [Gender, SetGender] = useState('');
+  const [Address, setAddress] = useState('');
+  const [role, setRole] = useState('');
 
   return (
     <DataContext.Provider
@@ -30,6 +33,12 @@ export const MainProvider = ({ children }) => {
         SetLastname,
         contact,
         SetContact,
+        Gender,
+        SetGender,
+        Address,
+        setAddress,
+        role,
+        setRole,
       }}
     >
       {children}
