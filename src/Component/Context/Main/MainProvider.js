@@ -11,6 +11,9 @@ export const MainProvider = ({ children }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstname, SetFirstname] = useState('');
+  const [lastname, SetLastname] = useState('');
+  const [contact, SetContact] = useState('');
 
   return (
     <DataContext.Provider
@@ -21,6 +24,12 @@ export const MainProvider = ({ children }) => {
         setEmail,
         password,
         setPassword,
+        firstname,
+        SetFirstname,
+        lastname,
+        SetLastname,
+        contact,
+        SetContact,
       }}
     >
       {children}

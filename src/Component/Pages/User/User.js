@@ -1,6 +1,16 @@
 import { useMemo, useState } from 'react';
-import { Box, TableComponent, Flex, Heading, Button } from '../../Packages';
+import {
+  Box,
+  TableComponent,
+  Flex,
+  Heading,
+  Button,
+  Text,
+  Input,
+} from '../../Packages';
 import { UserData } from '../Component/SampleData';
+import useMain from '../../Context/Main/MainContext';
+import { Post } from '../../API/Request_Format';
 
 const User = () => {
   const [search, setSearch] = useState('');
@@ -37,11 +47,18 @@ const User = () => {
     []
   );
 
-  const AddModal = () => {};
-
-  const HandleAdd = () => {
-    console.log('awwww');
-    setClose(true);
+  const { email, password, firstname, lastname, contact } = useMain();
+  const HandleAdd = async () => {
+    await Post({
+      url: 'admin/user',
+      body: {
+        Firstname: firstname,
+        Lastname: lastname,
+        Email: email,
+        Contact: contact,
+        Password: password,
+      },
+    });
   };
   return (
     <Box w={'100%'}>
@@ -60,7 +77,6 @@ const User = () => {
         setSearch={setSearch}
         placeholder={'Search name'}
         button={'User'}
-        ModalBody={<AddModal />}
         AddNew={HandleAdd}
         callBack={callBack}
         close={close}

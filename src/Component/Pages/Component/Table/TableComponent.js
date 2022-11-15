@@ -123,6 +123,7 @@ const TableComponent = ({
               BtnSave={'Save ' + button}
               close={close}
               setClose={setClose}
+              Type={button}
             />
             <Select
               w={32}

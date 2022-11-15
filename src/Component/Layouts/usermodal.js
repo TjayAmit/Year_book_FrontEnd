@@ -10,6 +10,7 @@ import {
   Button,
   useDisclosure,
 } from '@chakra-ui/react';
+import AddUser from '../Pages/User/AddUser';
 
 function Usermodal({
   Header,
@@ -19,6 +20,7 @@ function Usermodal({
   AddNew,
   close,
   setClose,
+  Type,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
@@ -36,7 +38,7 @@ function Usermodal({
         <ModalContent>
           <ModalHeader>{Header}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>{Body}</ModalBody>
+          <ModalBody>{Type == 'User' ? <AddUser /> : ''}</ModalBody>
 
           <ModalFooter>
             <Button
