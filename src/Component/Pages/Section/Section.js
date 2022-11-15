@@ -4,7 +4,7 @@ import { SectionData } from '../Component/SampleData';
 
 const Section = () => {
   const [search, setSearch] = useState('');
-
+  const [close, setClose] = useState(false);
   const callBack = e => {
     e.preventDefault();
   };
@@ -47,6 +47,8 @@ const Section = () => {
         placeholder={'Search section'}
         button={'Section'}
         callBack={callBack}
+        close={close}
+        setClose={setClose}
       />
     </Box>
   );

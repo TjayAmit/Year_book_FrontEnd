@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
-import { Box, TableComponent, Flex, Heading } from '../../Packages';
+import { Box, TableComponent, Flex, Heading, Button } from '../../Packages';
 import { UserData } from '../Component/SampleData';
 
 const User = () => {
   const [search, setSearch] = useState('');
+  const [fetch, setFetch] = useState(false);
+  const [close, setClose] = useState(false);
 
   const callBack = e => {
     e.preventDefault();
@@ -35,6 +37,12 @@ const User = () => {
     []
   );
 
+  const AddModal = () => {};
+
+  const HandleAdd = () => {
+    console.log('awwww');
+    setClose(true);
+  };
   return (
     <Box w={'100%'}>
       <Box w={'100%'}>
@@ -44,6 +52,7 @@ const User = () => {
           </Heading>
         </Flex>
       </Box>
+
       <TableComponent
         columns={column}
         data={UserData}
@@ -51,7 +60,11 @@ const User = () => {
         setSearch={setSearch}
         placeholder={'Search name'}
         button={'User'}
+        ModalBody={<AddModal />}
+        AddNew={HandleAdd}
         callBack={callBack}
+        close={close}
+        setClose={setClose}
       />
     </Box>
   );

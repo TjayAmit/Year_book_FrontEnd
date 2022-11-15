@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import {
-  useColorMode,
-  Switch,
-  Flex,
-  Button,
-  IconButton,
-  Link,
-} from '@chakra-ui/react';
+import { Flex, Button, IconButton, Link } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,8 +29,6 @@ const LinkNavigation = props => {
 };
 
 const Header = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const isLight = colorMode === 'light';
   const [display, changeDisplay] = useState('none');
 
   return (
@@ -61,7 +52,6 @@ const Header = () => {
           onClick={() => changeDisplay('flex')}
           display={['flex', 'flex', 'none', 'none']}
         />
-        <Switch color="green" isChecked={isLight} onChange={toggleColorMode} />
       </Flex>
 
       {/* Mobile Content */}
