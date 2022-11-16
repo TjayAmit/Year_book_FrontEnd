@@ -4,7 +4,6 @@ import { Progress } from '@chakra-ui/react';
 import useMain from '../../Context/Main/MainContext';
 import { Post, Get, Put } from '../../API/Request_Format';
 import { useToast } from '@chakra-ui/react';
-import { InstructorData } from '../Component/SampleData';
 
 const Instructor = () => {
   const toast = useToast();
@@ -14,6 +13,7 @@ const Instructor = () => {
   const [loading, setLoading] = useState(false);
   const [UserData, setUserData] = useState([]);
   const [notif, setNotif] = useState(true);
+  const [sectionData, setSectionData] = useState([]);
 
   const callBack = e => {
     e.preventDefault();
@@ -28,6 +28,15 @@ const Instructor = () => {
     if (request.data.status == 200) {
       setUserData(request.data.data.filter(x => x.UserType == 1));
       setNotif(false);
+    }
+
+    const sectionrequest = await Get({
+      url: 'admin/custom_section_select',
+      params: {},
+    });
+
+    if (sectionrequest.data.status == 200) {
+      setSectionData(sectionrequest.data.data);
     }
   };
 
@@ -80,6 +89,8 @@ const Instructor = () => {
     role,
     setRole,
     id,
+    setSectionID,
+    SectionID,
   } = useMain();
   const HandleAdd = async () => {
     const request = await Post({
@@ -95,7 +106,7 @@ const Instructor = () => {
         Batch_ID: 0,
         Password: password,
         isVerified: 0,
-        Section_ID: 0,
+        Section_ID: SectionID,
         Batch_ID: 0,
         Payment: 0,
         UserType: 1,
@@ -152,7 +163,7 @@ const Instructor = () => {
         Batch_ID: 0,
         isVerified: 0,
         Password: password,
-        Section_ID: 0,
+        Section_ID: SectionID,
         Batch_ID: 0,
         Payment: 0,
         UserType: 1,
@@ -224,6 +235,7 @@ const Instructor = () => {
         setLoading={setLoading}
         setFetch={setFetch}
         notif={notif}
+        sectionData={sectionData}
       />
     </Box>
   );

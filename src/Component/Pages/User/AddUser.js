@@ -7,13 +7,13 @@ import {
   Button,
   Text,
   Input,
-  Select,
   FormControl,
   FormLabel,
   Textarea,
 } from '../../Packages';
 import useMain from '../../Context/Main/MainContext';
-function AddUser({ action, data, usertype }) {
+import Select from 'react-select';
+function AddUser({ action, data, usertype, sectionData }) {
   const {
     email,
     setEmail,
@@ -33,6 +33,8 @@ function AddUser({ action, data, usertype }) {
     setRole,
     id,
     setId,
+    setSectionID,
+    SectionID,
   } = useMain();
   const passwordRef = useRef();
 
@@ -48,9 +50,20 @@ function AddUser({ action, data, usertype }) {
       setEmail(data.Email);
       setPassword(data.Password);
       setId(data.id);
+      setSectionID(data.Section_ID);
     }
   }, []);
 
+  const genderoptions = [
+    { value: 'Male', label: 'Male' },
+    { value: 'Female', label: 'Female' },
+  ];
+
+  const Utypeoptions = [
+    { value: '0', label: 'Admin' },
+    { value: '1', label: 'Instructor' },
+    { value: '2', label: 'Client' },
+  ];
   return (
     <div>
       <Flex mb={2}>
@@ -94,18 +107,32 @@ function AddUser({ action, data, usertype }) {
       <Box mb={2}>
         <FormControl isRequired>
           <FormLabel>Gender</FormLabel>
+
           <Select
             defaultValue={action == 'update' ? data.Gender : null}
             onChange={e => {
-              SetGender(e.target.value);
+              SetGender(e.value);
             }}
-          >
-            <option value="">-- Select --</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </Select>
+            options={genderoptions}
+          />
         </FormControl>
       </Box>
+      {usertype == 'Instructor' && (
+        <Box mb={2}>
+          <FormControl isRequired>
+            <FormLabel>Select Section</FormLabel>
+            <Select
+              defaultValue={action == 'update' ? data.Section_ID : null}
+              onChange={e => {
+                setSectionID(e.value);
+              }}
+              options={sectionData}
+            />
+          </FormControl>
+        </Box>
+      )}
+
+      {console.log(sectionData)}
 
       {usertype == 'client' || usertype == 'Instructor' ? (
         <Box mb={2}>
@@ -123,17 +150,14 @@ function AddUser({ action, data, usertype }) {
         <Box mb={2}>
           <FormControl isRequired>
             <FormLabel>Role </FormLabel>
+
             <Select
               defaultValue={action == 'update' ? data.UserType : null}
               onChange={e => {
-                setRole(e.target.value);
+                setRole(e.value);
               }}
-            >
-              <option value="">-- Select --</option>
-              <option value="0">Admin</option>
-              <option value="1">Instructor</option>
-              <option value="2">Client</option>
-            </Select>
+              options={Utypeoptions}
+            />
           </FormControl>
         </Box>
       )}

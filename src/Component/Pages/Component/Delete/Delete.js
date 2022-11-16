@@ -30,7 +30,20 @@ const DeleteData = ({ id, Type, setFetch }) => {
 
         if (result.status == 200) {
           setFetch(true);
-          console.log('uscc');
+
+          success();
+        }
+      };
+
+      const sectionDelete = async () => {
+        const result = await Delete({
+          url: 'admin/section',
+          params: { id: id },
+        });
+
+        if (result.status == 200) {
+          setFetch(true);
+
           success();
         }
       };
@@ -44,6 +57,10 @@ const DeleteData = ({ id, Type, setFetch }) => {
           break;
         case 'Instructor':
           userDelete();
+          break;
+
+        case 'Section':
+          sectionDelete();
           break;
       }
     };

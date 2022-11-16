@@ -19,9 +19,28 @@ export const MainProvider = ({ children }) => {
   const [role, setRole] = useState('');
   const [id, setId] = useState('');
 
+  //Section
+
+  const [Batch_ID, setbatchid] = useState();
+  const [sectionname, setSectionName] = useState();
+  const [Instructor_id, setInstructor_id] = useState();
+  const [sectionDescription, setSectionDescription] = useState();
+
+  const [SectionID, setSectionID] = useState();
+
   return (
     <DataContext.Provider
       value={{
+        Batch_ID,
+        setbatchid,
+        sectionname,
+        setSectionName,
+        Instructor_id,
+        setInstructor_id,
+        sectionDescription,
+        setSectionDescription,
+        setSectionID,
+        SectionID,
         user,
         setUser,
         email,

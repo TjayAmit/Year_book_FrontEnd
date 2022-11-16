@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import AddUser from '../Pages/User/AddUser';
 import useMain from '../Context/Main/MainContext';
+import SectionModal from '../Pages/Section/SectionModal';
 
 function Usermodal({
   Header,
@@ -27,6 +28,8 @@ function Usermodal({
   action,
   data,
   Update,
+  batchData,
+  sectionData,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
@@ -72,12 +75,15 @@ function Usermodal({
           <ModalHeader>{Header}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {Type == 'User' ? (
-              <AddUser action={action} data={data} />
-            ) : Type == 'Client' ? (
-              <AddUser action={action} usertype={'client'} data={data} />
-            ) : Type == 'Instructor' ? (
-              <AddUser action={action} usertype={'Instructor'} data={data} />
+            {Type == 'User' || Type == 'Client' || Type == 'Instructor' ? (
+              <AddUser
+                usertype={Type}
+                action={action}
+                data={data}
+                sectionData={sectionData}
+              />
+            ) : Type == 'Section' ? (
+              <SectionModal action={action} data={data} />
             ) : (
               ''
             )}
