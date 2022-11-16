@@ -36,6 +36,7 @@ import {
   Thead,
   Tooltip,
   Tr,
+  Textarea,
   Select,
   Spacer,
   Stack,
@@ -57,8 +58,8 @@ import Login from './Pages/Login/Login';
 //COMPONENT
 import CardComponent from './Pages/Component/Card/CardComponent';
 import CustomFormController from './Pages/Component/CustomFormController/CustomFormController';
-import Delete from './Pages/Component/Delete/Delete';
-import Edit from './Pages/Component/Edit/Edit';
+import DeleteData from './Pages/Component/Delete/Delete';
+import EditData from './Pages/Component/Edit/Edit';
 import Header from './Pages/Component/Header/Header';
 import LineGraph from './Pages/Component/LineGraph/LineGraph';
 import TableComponent from './Pages/Component/Table/TableComponent';
@@ -75,9 +76,9 @@ export {
   ChevronLeftIcon,
   ChevronRightIcon,
   CustomFormController,
-  Delete,
+  DeleteData,
   Divider,
-  Edit,
+  EditData,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -101,6 +102,7 @@ export {
   TableComponent,
   Table,
   Tbody,
+  Textarea,
   Th,
   Thead,
   Td,
