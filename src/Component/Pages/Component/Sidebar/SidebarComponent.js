@@ -56,7 +56,7 @@ const SidebarComponent = ({ flip }) => {
           h={!flip ? '20vh' : '13vh'}
           transition={'all ease 0.4s'}
           bg={'#120e63'}
-          p={4}
+          p={2}
         >
           <Center>
             <Box w={'12rem'}>

@@ -3,6 +3,7 @@ import { BiSearch } from 'react-icons/bi';
 import { MdAddCircleOutline } from 'react-icons/md';
 import Usermodal from '../../../Layouts/usermodal';
 import notfound from '../../../../Asset/notfound.svg';
+import { Progress } from '@chakra-ui/react';
 import {
   ArrowRightIcon,
   ArrowLeftIcon,
@@ -46,6 +47,8 @@ const TableComponent = ({
   loading,
   setLoading,
   setFetch,
+  Update,
+  notif,
 }) => {
   const {
     getTableProps,
@@ -181,6 +184,7 @@ const TableComponent = ({
               </Tr>
             ))}
           </Thead>
+
           <Tbody {...getTableBodyProps()}>
             {page.map(row => {
               prepareRow(row);
@@ -202,7 +206,18 @@ const TableComponent = ({
                       <Td {...cell.getCellProps()}>
                         {cell.column.id === 'action' ? (
                           <Flex columnGap={3}>
-                            <EditData />
+                            <EditData
+                              Update={Update}
+                              data={cell.row.original}
+                              id={cell.row.original.id}
+                              Type={button}
+                              setFetch={setFetch}
+                              BtnSave={'Update ' + button}
+                              close={close}
+                              setClose={setClose}
+                              loading={loading}
+                              setLoading={setLoading}
+                            />
                             <DeleteData
                               id={cell.row.original.id}
                               Type={button}
@@ -225,15 +240,13 @@ const TableComponent = ({
                               <Text>Client</Text>
                             ) : null}
                           </>
-                        ) : cell.column.Header ? (
+                        ) : cell.column.Header === 'NAME' ? (
                           <>
                             {cell.row.original.Firstname +
                               ' ' +
                               cell.row.original.Lastname}
                           </>
                         ) : (
-                          // <>{data.filter((x)=>x.id == cell.)}</>
-
                           cell.render('Cell')
                         )}
                       </Td>
@@ -246,6 +259,13 @@ const TableComponent = ({
         </Table>
         {page.length >= 1 ? null : (
           <>
+            {notif && (
+              <>
+                <Box>
+                  <Progress size="xs" isIndeterminate />
+                </Box>
+              </>
+            )}
             <Box textAlign={'center'} mt={10}>
               <Center>
                 <Box>

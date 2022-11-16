@@ -21,18 +21,29 @@ const DeleteData = ({ id, Type, setFetch }) => {
 
     //Delete
     const runDelete = async () => {
+      //Delete Users only. Specifically Admin,Client and Instructor
+      const userDelete = async () => {
+        const result = await Delete({
+          url: 'admin/user',
+          params: { id: id },
+        });
+
+        if (result.status == 200) {
+          setFetch(true);
+          console.log('uscc');
+          success();
+        }
+      };
+
       switch (Type) {
         case 'User':
-          const result = await Delete({
-            url: 'admin/user',
-            params: { id: id },
-          });
-
-          if (result.status == 200) {
-            setFetch(true);
-            console.log('uscc');
-            success();
-          }
+          userDelete();
+          break;
+        case 'Client':
+          userDelete();
+          break;
+        case 'Instructor':
+          userDelete();
           break;
       }
     };

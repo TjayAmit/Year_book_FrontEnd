@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   TableComponent,
@@ -10,9 +10,10 @@ import {
   Select,
   FormControl,
   FormLabel,
+  Textarea,
 } from '../../Packages';
 import useMain from '../../Context/Main/MainContext';
-function AddUser() {
+function AddUser({ action, data, usertype }) {
   const {
     email,
     setEmail,
@@ -30,7 +31,26 @@ function AddUser() {
     setAddress,
     role,
     setRole,
+    id,
+    setId,
   } = useMain();
+  const passwordRef = useRef();
+
+  useEffect(() => {
+    setPassword('User_Yearbook');
+    if (action == 'update') {
+      SetFirstname(data.Firstname);
+      SetLastname(data.Lastname);
+      SetContact(data.Contact);
+      SetGender(data.Gender);
+      setAddress(data.Address);
+      setRole(data.UserType);
+      setEmail(data.Email);
+      setPassword(data.Password);
+      setId(data.id);
+    }
+  }, []);
+
   return (
     <div>
       <Flex mb={2}>
@@ -38,7 +58,7 @@ function AddUser() {
           <FormControl isRequired>
             <FormLabel>First name</FormLabel>
             <Input
-              value={firstname}
+              defaultValue={action == 'update' ? data.Firstname : null}
               onChange={e => {
                 SetFirstname(e.target.value);
               }}
@@ -50,7 +70,7 @@ function AddUser() {
           <FormControl isRequired>
             <FormLabel>Last Name</FormLabel>
             <Input
-              value={lastname}
+              defaultValue={action == 'update' ? data.Lastname : null}
               onChange={e => {
                 SetLastname(e.target.value);
                 setPassword('user_' + e.target.value);
@@ -63,7 +83,7 @@ function AddUser() {
         <FormControl isRequired>
           <FormLabel>Contact</FormLabel>
           <Input
-            value={contact}
+            defaultValue={action == 'update' ? data.Contact : null}
             onChange={e => {
               SetContact(e.target.value);
             }}
@@ -75,6 +95,7 @@ function AddUser() {
         <FormControl isRequired>
           <FormLabel>Gender</FormLabel>
           <Select
+            defaultValue={action == 'update' ? data.Gender : null}
             onChange={e => {
               SetGender(e.target.value);
             }}
@@ -86,27 +107,42 @@ function AddUser() {
         </FormControl>
       </Box>
 
-      <Box mb={2}>
-        <FormControl isRequired>
-          <FormLabel>Role</FormLabel>
-          <Select
-            onChange={e => {
-              setRole(e.target.value);
-            }}
-          >
-            <option value="">-- Select --</option>
-            <option value="0">Admin</option>
-            <option value="1">Instructor</option>
-            <option value="2">Clients</option>
-          </Select>
-        </FormControl>
-      </Box>
+      {usertype == 'client' || usertype == 'Instructor' ? (
+        <Box mb={2}>
+          <FormControl isRequired>
+            <FormLabel>Address </FormLabel>
+            <Textarea
+              defaultValue={action == 'update' ? data.Address : null}
+              onChange={e => {
+                setAddress(e.target.value);
+              }}
+            />
+          </FormControl>
+        </Box>
+      ) : (
+        <Box mb={2}>
+          <FormControl isRequired>
+            <FormLabel>Role </FormLabel>
+            <Select
+              defaultValue={action == 'update' ? data.UserType : null}
+              onChange={e => {
+                setRole(e.target.value);
+              }}
+            >
+              <option value="">-- Select --</option>
+              <option value="0">Admin</option>
+              <option value="1">Instructor</option>
+              <option value="2">Client</option>
+            </Select>
+          </FormControl>
+        </Box>
+      )}
 
       <Box mb={2}>
         <FormControl isRequired>
           <FormLabel>Email</FormLabel>
           <Input
-            value={email}
+            defaultValue={action == 'update' ? data.Email : null}
             onChange={e => {
               setEmail(e.target.value);
             }}
@@ -114,17 +150,31 @@ function AddUser() {
         </FormControl>
       </Box>
 
-      <Box mb={2}>
-        <FormControl isRequired>
-          <FormLabel>Password</FormLabel>
-          <Input
-            value={'user_' + lastname}
-            onChange={e => {
-              setPassword(e.target.value);
+      {action == 'update' ? null : (
+        <Box mb={2}>
+          <FormControl isRequired>
+            <FormLabel>Password</FormLabel>
+            <Input
+              ref={passwordRef}
+              defaultValue={action == 'update' ? data.Password : null}
+              onChange={e => {
+                setPassword(e.target.value);
+              }}
+            />
+          </FormControl>
+          <Button
+            variant={'outline'}
+            size={'sm'}
+            fontWeight={'normal'}
+            colorScheme={'blue'}
+            onClick={() => {
+              passwordRef.current.value = password;
             }}
-          />
-        </FormControl>
-      </Box>
+          >
+            Use Default Password
+          </Button>
+        </Box>
+      )}
     </div>
   );
 }
