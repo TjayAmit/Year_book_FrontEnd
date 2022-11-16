@@ -24,10 +24,10 @@ const RouteComponent = () => {
       <Routes>
         <Route path="/" element={<Outlet />}>
           <Route path="/" element={<ProtectedRoute user={user} />} />
-          <Route path="/Yearbook/Home" element={<Index />} />
+          <Route path="/DPLMHS-yearbook" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/yearbook" element={<Yearbook />} />
+          {/* <Route path="/yearbook" element={<Yearbook />} /> */}
 
           <Route path="/login" element={<Login />} />
 

@@ -26,7 +26,7 @@ const CustomFormController = ({
 
   return (
     <>
-      <FormControl marginTop={5} isInvalid={isError} border={'red'} isRequired>
+      <FormControl marginTop={5} isInvalid={isError} isRequired>
         <FormLabel fontSize={'14'} fontWeight="500" color={'#272727'}>
           {title}
         </FormLabel>
@@ -40,10 +40,9 @@ const CustomFormController = ({
             value={value}
             placeholder={placeholder}
             fontSize={13}
-            focusBorderColor={'#120e63'}
+            focusBorderColor={'primary.900'}
+            color={'grey'}
             onChange={e => setValue(e.target.value)}
-            className={'inputs'}
-            border={'1px solid black'}
           />
           {type === 'password' ? (
             <InputRightElement width="3rem" onClick={() => setShow(!show)}>

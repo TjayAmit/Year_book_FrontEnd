@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
-import { Box, TableComponent, Flex, Heading, Button } from '../../Packages';
+import { Box, TableComponent, Flex, Heading } from '../../Packages';
 import { UserData } from '../Component/SampleData';
 
 const User = () => {
   const [search, setSearch] = useState('');
-  const [fetch, setFetch] = useState(false);
+  // const [fetch, setFetch] = useState(false);
   const [close, setClose] = useState(false);
 
   const callBack = e => {

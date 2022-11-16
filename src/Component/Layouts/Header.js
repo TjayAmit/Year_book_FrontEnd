@@ -22,6 +22,7 @@ const LinkNavigation = props => {
       _hover={{
         textDecoration: 'underline',
       }}
+      color={'black'}
     >
       {props.name}
     </Button>
@@ -35,12 +36,12 @@ const Header = () => {
     <Flex>
       <Flex position="fixed" top="1rem" right="1rem" align="center">
         {/* Desktop */}
-        <Flex display={['none', 'none', 'flex', 'flex']}>
+        <Flex display={['none', 'none', 'flex', 'flex']} mr={10}>
           <LinkNavigation path="/" name="Home" />
           <LinkNavigation path="/about" name="About" />
           <LinkNavigation path="/contact" name="Contact" />
-          <LinkNavigation path="/yearbook" name="Year Book" />
-          <LinkNavigation path="/login" name="Login" />
+          {/* <LinkNavigation path="/yearbook" name="Year Book" /> */}
+          <LinkNavigation path="/login" name="Sign in" />
         </Flex>
 
         {/* Mobile */}
@@ -115,7 +116,7 @@ const Header = () => {
               Contact
             </Button>
           </Link>
-          <Link href="/yearbook" passHref>
+          {/* <Link href="/yearbook" passHref>
             <Button
               as="a"
               aria-label="Year Book"
@@ -125,7 +126,7 @@ const Header = () => {
             >
               Year Book
             </Button>
-          </Link>
+          </Link> */}
           <Link href="/login" passHref>
             <Button
               as="a"

@@ -4,7 +4,7 @@ const ProtectedRoute = ({ user }) => {
   if (user.loggedIn) {
     return <Navigate replace to="/home/" />;
   }
-  return <Navigate replace to="/Yearbook/Home" />;
+  return <Navigate replace to="/DPLMHS-yearbook" />;
 };
 
 export default ProtectedRoute;
