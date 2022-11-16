@@ -2,6 +2,8 @@ import { useTable, usePagination } from 'react-table';
 import { BiSearch } from 'react-icons/bi';
 import { MdAddCircleOutline } from 'react-icons/md';
 import Usermodal from '../../../Layouts/usermodal';
+import notfound from '../../../../Asset/notfound.svg';
+import { Progress } from '@chakra-ui/react';
 import {
   ArrowRightIcon,
   ArrowLeftIcon,
@@ -10,8 +12,8 @@ import {
   Button,
   ChevronRightIcon,
   ChevronLeftIcon,
-  Edit,
-  Delete,
+  EditData,
+  DeleteData,
   Input,
   InputGroup,
   InputLeftElement,
@@ -26,6 +28,8 @@ import {
   Text,
   Tooltip,
   Select,
+  Center,
+  Image,
 } from '../../../Packages';
 import User from '../../User/User';
 
@@ -40,6 +44,11 @@ const TableComponent = ({
   AddNew,
   close,
   setClose,
+  loading,
+  setLoading,
+  setFetch,
+  Update,
+  notif,
 }) => {
   const {
     getTableProps,
@@ -123,6 +132,9 @@ const TableComponent = ({
               BtnSave={'Save ' + button}
               close={close}
               setClose={setClose}
+              Type={button}
+              loading={loading}
+              setLoading={setLoading}
             />
             <Select
               w={32}
@@ -172,6 +184,7 @@ const TableComponent = ({
               </Tr>
             ))}
           </Thead>
+
           <Tbody {...getTableBodyProps()}>
             {page.map(row => {
               prepareRow(row);
@@ -193,8 +206,23 @@ const TableComponent = ({
                       <Td {...cell.getCellProps()}>
                         {cell.column.id === 'action' ? (
                           <Flex columnGap={3}>
-                            <Edit />
-                            <Delete />
+                            <EditData
+                              Update={Update}
+                              data={cell.row.original}
+                              id={cell.row.original.id}
+                              Type={button}
+                              setFetch={setFetch}
+                              BtnSave={'Update ' + button}
+                              close={close}
+                              setClose={setClose}
+                              loading={loading}
+                              setLoading={setLoading}
+                            />
+                            <DeleteData
+                              id={cell.row.original.id}
+                              Type={button}
+                              setFetch={setFetch}
+                            />
                           </Flex>
                         ) : cell.column.Header === 'ID' ? (
                           <Text fontWeight={'bold'} color={'green.600'}>
@@ -202,6 +230,22 @@ const TableComponent = ({
                           </Text>
                         ) : cell.column.Header === 'PROFILE' ? (
                           <Avatar src={cell.value} />
+                        ) : cell.column.Header === 'ROLE' ? (
+                          <>
+                            {cell.value == 0 ? (
+                              <Text>Admin</Text>
+                            ) : cell.value == 1 ? (
+                              <Text>Instructor</Text>
+                            ) : cell.value == 2 ? (
+                              <Text>Client</Text>
+                            ) : null}
+                          </>
+                        ) : cell.column.Header === 'NAME' ? (
+                          <>
+                            {cell.row.original.Firstname +
+                              ' ' +
+                              cell.row.original.Lastname}
+                          </>
                         ) : (
                           cell.render('Cell')
                         )}
@@ -213,6 +257,25 @@ const TableComponent = ({
             })}
           </Tbody>
         </Table>
+        {page.length >= 1 ? null : (
+          <>
+            {notif && (
+              <>
+                <Box>
+                  <Progress size="xs" isIndeterminate />
+                </Box>
+              </>
+            )}
+            <Box textAlign={'center'} mt={10}>
+              <Center>
+                <Box>
+                  <Image src={notfound} width={'150px'} alt="Not found" />
+                </Box>
+                |<Text ml={2}>No Data Found .</Text>
+              </Center>
+            </Box>
+          </>
+        )}
       </div>
 
       {page.length >= 1 ? (

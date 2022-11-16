@@ -16,6 +16,7 @@ import Index from '../LandingPage/Index';
 import About from '../LandingPage/About';
 import Contact from '../LandingPage/Contact';
 import Yearbook from '../LandingPage/Yearbook';
+
 const RouteComponent = () => {
   const { user } = useMain();
 
