@@ -12,6 +12,7 @@ const Client = () => {
   const [loading, setLoading] = useState(false);
   const [UserData, setUserData] = useState([]);
   const [notif, setNotif] = useState(true);
+  const [sectionData, setSectionData] = useState([]);
   const callBack = e => {
     e.preventDefault();
   };
@@ -25,6 +26,15 @@ const Client = () => {
     if (request.data.status == 200) {
       setUserData(request.data.data.filter(x => x.UserType == 2));
       setNotif(false);
+    }
+
+    const sectionrequest = await Get({
+      url: 'admin/custom_section_select',
+      params: {},
+    });
+
+    if (sectionrequest.data.status == 200) {
+      setSectionData(sectionrequest.data.data);
     }
   };
 
@@ -84,6 +94,8 @@ const Client = () => {
     role,
     setRole,
     id,
+    setSectionID,
+    SectionID,
   } = useMain();
   const HandleAdd = async () => {
     const request = await Post({
@@ -99,7 +111,7 @@ const Client = () => {
         Batch_ID: 0,
         Password: password,
         isVerified: 0,
-        Section_ID: 0,
+        Section_ID: SectionID,
         Batch_ID: 0,
         Payment: 0,
         UserType: 2,
@@ -156,7 +168,7 @@ const Client = () => {
         Batch_ID: 0,
         isVerified: 0,
         Password: password,
-        Section_ID: 0,
+        Section_ID: SectionID,
         Batch_ID: 0,
         Payment: 0,
         UserType: 2,
@@ -227,6 +239,7 @@ const Client = () => {
         setLoading={setLoading}
         setFetch={setFetch}
         notif={notif}
+        sectionData={sectionData}
       />
     </Box>
   );

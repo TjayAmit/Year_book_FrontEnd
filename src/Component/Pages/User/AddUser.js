@@ -117,7 +117,7 @@ function AddUser({ action, data, usertype, sectionData }) {
           />
         </FormControl>
       </Box>
-      {usertype == 'Instructor' && (
+      {usertype == 'Instructor' || usertype == 'Client' ? (
         <Box mb={2}>
           <FormControl isRequired>
             <FormLabel>Select Section</FormLabel>
@@ -130,11 +130,9 @@ function AddUser({ action, data, usertype, sectionData }) {
             />
           </FormControl>
         </Box>
-      )}
+      ) : null}
 
-      {console.log(sectionData)}
-
-      {usertype == 'client' || usertype == 'Instructor' ? (
+      {usertype == 'Client' || usertype == 'Instructor' ? (
         <Box mb={2}>
           <FormControl isRequired>
             <FormLabel>Address </FormLabel>

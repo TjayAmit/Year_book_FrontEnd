@@ -272,6 +272,18 @@ const TableComponent = ({
                               </>
                             )}
                           </>
+                        ) : cell.column.Header === 'SECTION' ? (
+                          <>
+                            {cell.row.original.Section_ID
+                              ? sectionData
+                                  .filter(
+                                    x => x.value == cell.row.original.Section_ID
+                                  )
+                                  .map(s => {
+                                    return s.label;
+                                  })
+                              : cell.render('Cell')}
+                          </>
                         ) : (
                           cell.render('Cell')
                         )}
