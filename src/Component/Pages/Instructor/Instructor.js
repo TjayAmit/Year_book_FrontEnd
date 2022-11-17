@@ -1,10 +1,8 @@
 import { useMemo, useState, useEffect } from 'react';
 import { Box, Flex, Heading, TableComponent, Text } from '../../Packages';
-import { Progress } from '@chakra-ui/react';
 import useMain from '../../Context/Main/MainContext';
 import { Post, Get, Put } from '../../API/Request_Format';
 import { useToast } from '@chakra-ui/react';
-import { InstructorData } from '../Component/SampleData';
 
 const Instructor = () => {
   const toast = useToast();
@@ -12,29 +10,33 @@ const Instructor = () => {
   const [close, setClose] = useState(false);
   const [fetch, setFetch] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [UserData, setUserData] = useState([]);
-  const [notif, setNotif] = useState(true);
+
+  const {
+    firstname,
+    middlename,
+    lastname,
+    role,
+    email,
+    password,
+    profile,
+    sex,
+    FK_section_ID,
+    resetStates,
+    Instructor,
+    sections,
+    notif,
+    profileURL,
+    setChangesInstructor,
+  } = useMain();
 
   const callBack = e => {
     e.preventDefault();
   };
 
-  const fetch_data = async () => {
-    const request = await Get({
-      url: 'admin/user',
-      params: {},
-    });
-
-    if (request.data.status == 200) {
-      setUserData(request.data.data.filter(x => x.UserType == 1));
-      setNotif(false);
-    }
-  };
-
-  useEffect(() => {
-    fetch_data();
-    setFetch(false);
-  }, [fetch]);
+  // useEffect(() => {
+  //   fetch_data();
+  //   setFetch(false);
+  // }, [fetch]);
 
   const column = useMemo(
     () => [
@@ -43,16 +45,28 @@ const Instructor = () => {
         accessor: 'id',
       },
       {
-        Header: 'NAME',
-        accessor: 'name',
+        Header: 'First Name',
+        accessor: 'Firstname',
       },
       {
-        Header: 'ADDRESS',
-        accessor: 'Address',
+        Header: 'Middle Name',
+        accessor: 'Middlename',
       },
       {
-        Header: 'SEX',
-        accessor: 'Gender',
+        Header: 'Last Name',
+        accessor: 'Lastname',
+      },
+      {
+        Header: 'Gender',
+        accessor: 'Sex',
+      },
+      {
+        Header: 'Email',
+        accessor: 'Email',
+      },
+      {
+        Header: 'STATUS',
+        accessor: 'isVerified',
       },
       {
         Header: 'ACTION',
@@ -62,46 +76,18 @@ const Instructor = () => {
     []
   );
 
-  const {
-    email,
-    password,
-    firstname,
-    lastname,
-    contact,
-    setEmail,
-    setPassword,
-    SetFirstname,
-    SetLastname,
-    SetContact,
-    Gender,
-    SetGender,
-    Address,
-    setAddress,
-    role,
-    setRole,
-    id,
-  } = useMain();
   const HandleAdd = async () => {
     const request = await Post({
       url: 'admin/user',
       body: {
-        Firstname: firstname,
-        Lastname: lastname,
         Email: email,
-        Contact: contact,
-        Gender: Gender,
-        Address: Address,
-        Section_ID: 0,
-        Batch_ID: 0,
+        profile: profileURL,
         Password: password,
-        isVerified: 0,
-        Section_ID: 0,
-        Batch_ID: 0,
-        Payment: 0,
-        UserType: 1,
-        firstlogin: 0,
-        url: null,
-        Payment_Method: null,
+        Firstname: firstname,
+        Middlename: middlename,
+        Lastname: lastname,
+        Sex: sex,
+        FK_section_ID: FK_section_ID,
       },
     });
 
@@ -114,14 +100,11 @@ const Instructor = () => {
         duration: 9000,
         isClosable: true,
       });
-      setEmail('');
-      setPassword('');
-      SetFirstname('');
-      SetLastname('');
-      SetContact('');
+      resetStates();
       setClose(true);
       setLoading(false);
       setFetch(true);
+      setChangesInstructor(true);
     }
 
     if (request.data.status == 500) {
@@ -137,28 +120,20 @@ const Instructor = () => {
     setLoading(false);
   };
 
-  const HandleUpdate = async () => {
+  const HandleUpdate = async props => {
     const request = await Put({
       url: 'admin/user',
-      params: id,
+      params: props.id,
       body: {
-        Firstname: firstname,
-        Lastname: lastname,
         Email: email,
-        Contact: contact,
-        Gender: Gender,
-        Address: Address,
-        Section_ID: 0,
-        Batch_ID: 0,
-        isVerified: 0,
+        role: role,
+        profile: profileURL,
         Password: password,
-        Section_ID: 0,
-        Batch_ID: 0,
-        Payment: 0,
-        UserType: 1,
-        firstlogin: 0,
-        url: null,
-        Payment_Method: null,
+        Firstname: firstname,
+        Middlename: middlename,
+        Lastname: lastname,
+        Sex: sex,
+        FK_section_ID: FK_section_ID,
       },
     });
     if (request.data.status == 200) {
@@ -170,14 +145,11 @@ const Instructor = () => {
         duration: 9000,
         isClosable: true,
       });
-      setEmail('');
-      setPassword('');
-      SetFirstname('');
-      SetLastname('');
-      SetContact('');
+      resetStates();
       setClose(true);
       setLoading(false);
       setFetch(true);
+      setChangesInstructor(true);
     }
     if (request.data.status == 500) {
       toast({
@@ -192,7 +164,7 @@ const Instructor = () => {
     setLoading(false);
   };
 
-  const filter = UserData.filter(
+  const filter = Instructor.filter(
     x =>
       x.Firstname.toLowerCase().includes(search.toLowerCase()) ||
       x.Lastname.toLowerCase().includes(search.toLowerCase())

@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { FaUserAlt } from 'react-icons/fa';
 import {
   Box,
-  TableComponent,
   Flex,
-  Heading,
   Button,
-  Text,
   Input,
-  Select,
   FormControl,
   FormLabel,
   Textarea,
+  CustomFormController,
+  CustomSelect,
 } from '../../Packages';
 import useMain from '../../Context/Main/MainContext';
+
 function AddUser({ action, data, usertype }) {
   const {
     email,
@@ -21,18 +21,24 @@ function AddUser({ action, data, usertype }) {
     setPassword,
     firstname,
     SetFirstname,
+    middlename,
+    setMiddlename,
     lastname,
     SetLastname,
-    contact,
-    SetContact,
-    Gender,
-    SetGender,
-    Address,
-    setAddress,
-    role,
-    setRole,
-    id,
+    sex,
+    setSex,
     setId,
+    FK_section_ID,
+    setFK_section_ID,
+    sexSelection,
+    Section,
+    sectionName,
+    setSectionName,
+    sectionDescription,
+    setSectionDescription,
+    FK_instructor_ID,
+    setFK_instructor_ID,
+    InstructorSelection,
   } = useMain();
   const passwordRef = useRef();
 
@@ -40,117 +46,155 @@ function AddUser({ action, data, usertype }) {
     setPassword('User_Yearbook');
     if (action == 'update') {
       SetFirstname(data.Firstname);
+      setMiddlename(data.Middlename);
       SetLastname(data.Lastname);
-      SetContact(data.Contact);
-      SetGender(data.Gender);
-      setAddress(data.Address);
-      setRole(data.UserType);
+      setSex(data.Sex);
       setEmail(data.Email);
-      setPassword(data.Password);
       setId(data.id);
     }
   }, []);
 
   return (
     <div>
-      <Flex mb={2}>
-        <Box>
-          <FormControl isRequired>
-            <FormLabel>First name</FormLabel>
-            <Input
-              defaultValue={action == 'update' ? data.Firstname : null}
-              onChange={e => {
-                SetFirstname(e.target.value);
-              }}
-            />
-          </FormControl>
-        </Box>
-
-        <Box ml={2}>
-          <FormControl isRequired>
-            <FormLabel>Last Name</FormLabel>
-            <Input
-              defaultValue={action == 'update' ? data.Lastname : null}
-              onChange={e => {
-                SetLastname(e.target.value);
-                setPassword('user_' + e.target.value);
-              }}
-            />
-          </FormControl>
-        </Box>
-      </Flex>
-      <Box mb={2}>
-        <FormControl isRequired>
-          <FormLabel>Contact</FormLabel>
-          <Input
-            defaultValue={action == 'update' ? data.Contact : null}
-            onChange={e => {
-              SetContact(e.target.value);
-            }}
+      <Flex mb={2} columnGap={5}>
+        {usertype === 'client' ||
+        usertype === 'Instructor' ||
+        usertype === 'User' ? (
+          <CustomFormController
+            isSignup={true}
+            title={'First name'}
+            type={'text'}
+            value={firstname}
+            placeholder={`Enter First Name`}
+            setValue={SetFirstname}
+            errorMessage={`First name is required.`}
           />
-        </FormControl>
-      </Box>
+        ) : null}
+        {usertype === 'client' ||
+        usertype === 'Instructor' ||
+        usertype === 'User' ? (
+          <CustomFormController
+            isSignup={true}
+            title={'Middle name'}
+            type={'Text'}
+            value={middlename}
+            placeholder={`Enter middle name`}
+            setValue={setMiddlename}
+            errorMessage={`Middle name is required.`}
+            // isError={isErrorPassword}
+            children={<FaUserAlt color={'#1f894c'} />}
+          />
+        ) : null}
+      </Flex>
+      <Flex mb={2} columnGap={5}>
+        {usertype === 'client' ||
+        usertype === 'Instructor' ||
+        usertype === 'User' ? (
+          <CustomFormController
+            isSignup={true}
+            title={'Last name'}
+            type={'Text'}
+            value={lastname}
+            placeholder={`Enter Last name`}
+            setValue={SetLastname}
+            errorMessage={`Last name is required.`}
+            // isError={isErrorPassword}
+            children={<FaUserAlt color={'#1f894c'} />}
+          />
+        ) : null}
+        {usertype === 'client' ||
+        usertype === 'Instructor' ||
+        usertype === 'User' ? (
+          <CustomSelect
+            title={'Sex'}
+            value={sex}
+            datas={sexSelection}
+            setValue={setSex}
+            mt={'1.27rem'}
+          />
+        ) : null}
+      </Flex>
 
-      <Box mb={2}>
-        <FormControl isRequired>
-          <FormLabel>Gender</FormLabel>
-          <Select
-            defaultValue={action == 'update' ? data.Gender : null}
-            onChange={e => {
-              SetGender(e.target.value);
-            }}
-          >
-            <option value="">-- Select --</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </Select>
-        </FormControl>
-      </Box>
-
-      {usertype == 'client' || usertype == 'Instructor' ? (
+      {usertype == 'client' ? (
         <Box mb={2}>
           <FormControl isRequired>
             <FormLabel>Address </FormLabel>
             <Textarea
               defaultValue={action == 'update' ? data.Address : null}
               onChange={e => {
-                setAddress(e.target.value);
+                // setAddress(e.target.value);
               }}
             />
           </FormControl>
         </Box>
-      ) : (
-        <Box mb={2}>
-          <FormControl isRequired>
-            <FormLabel>Role </FormLabel>
-            <Select
-              defaultValue={action == 'update' ? data.UserType : null}
-              onChange={e => {
-                setRole(e.target.value);
-              }}
-            >
-              <option value="">-- Select --</option>
-              <option value="0">Admin</option>
-              <option value="1">Instructor</option>
-              <option value="2">Client</option>
-            </Select>
-          </FormControl>
-        </Box>
-      )}
+      ) : null}
 
       <Box mb={2}>
-        <FormControl isRequired>
-          <FormLabel>Email</FormLabel>
-          <Input
-            defaultValue={action == 'update' ? data.Email : null}
-            onChange={e => {
-              setEmail(e.target.value);
-            }}
+        {usertype === 'client' ||
+        usertype === 'Instructor' ||
+        usertype === 'User' ? (
+          <CustomSelect
+            title={'Section'}
+            value={FK_section_ID}
+            datas={Section}
+            setValue={setFK_section_ID}
+            mt={'1.27rem'}
           />
-        </FormControl>
+        ) : null}
+        {usertype === 'client' ||
+        usertype === 'Instructor' ||
+        usertype === 'User' ? (
+          <CustomFormController
+            isSignup={true}
+            title={'Email'}
+            type={'email'}
+            value={email}
+            placeholder={'Enter email'}
+            setValue={setEmail}
+            errorMessage={'Email is required.'}
+            // isError={isErrorEmail}
+          />
+        ) : null}
+
+        {usertype === 'Section' ? (
+          <CustomFormController
+            isSignup={true}
+            title={'Name'}
+            type={'text'}
+            value={sectionName}
+            placeholder={'Enter name'}
+            setValue={setSectionName}
+            errorMessage={'Section name is required.'}
+            // isError={isErrorEmail}
+          />
+        ) : null}
+        {usertype === 'Section' ? (
+          <CustomFormController
+            isSignup={true}
+            title={'Description'}
+            type={'text'}
+            value={sectionDescription}
+            placeholder={'Enter description'}
+            setValue={setSectionDescription}
+            errorMessage={'Section description is required.'}
+            // isError={isErrorEmail}
+          />
+        ) : null}
+        {usertype === 'Section' ? (
+          <CustomSelect
+            title={'Instructor'}
+            value={FK_instructor_ID}
+            datas={InstructorSelection}
+            setValue={setFK_instructor_ID}
+            mt={'1.27rem'}
+          />
+        ) : null}
       </Box>
 
-      {action == 'update' ? null : (
+      {action !== 'update' &&
+      (usertype === 'client' ||
+        usertype === 'Instructor' ||
+        usertype === 'User') ? (
         <Box mb={2}>
           <FormControl isRequired>
             <FormLabel>Password</FormLabel>
@@ -165,6 +209,7 @@ function AddUser({ action, data, usertype }) {
           <Button
             variant={'outline'}
             size={'sm'}
+            mt={2}
             fontWeight={'normal'}
             colorScheme={'blue'}
             onClick={() => {
@@ -174,7 +219,7 @@ function AddUser({ action, data, usertype }) {
             Use Default Password
           </Button>
         </Box>
-      )}
+      ) : null}
     </div>
   );
 }

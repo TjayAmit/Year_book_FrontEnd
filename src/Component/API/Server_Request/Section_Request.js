@@ -4,6 +4,10 @@ export const SectionPostRequest = async ({ body }) => {
   return await Post({ url: 'section', body: body });
 };
 
+export const SectionGetALLRequest = async () => {
+  return await Get({ url: 'section' });
+};
+
 export const SectionGetRequest = async ({ params }) => {
   return await Get({ url: 'section', params: params });
 };

@@ -240,6 +240,16 @@ const TableComponent = ({
                               <Text>Client</Text>
                             ) : null}
                           </>
+                        ) : cell.column.Header === 'STATUS' ? (
+                          <>
+                            {cell.value == 0 ? (
+                              <Text>PENDING</Text>
+                            ) : cell.value == 1 ? (
+                              <Text>ACTIVE</Text>
+                            ) : (
+                              <Text>DISSABLE</Text>
+                            )}
+                          </>
                         ) : cell.column.Header === 'NAME' ? (
                           <>
                             {cell.row.original.Firstname +

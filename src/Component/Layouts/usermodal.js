@@ -31,36 +31,12 @@ function Usermodal({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
 
-  const {
-    email,
-    password,
-    firstname,
-    lastname,
-    contact,
-    setEmail,
-    setPassword,
-    SetFirstname,
-    SetLastname,
-    SetContact,
-    Gender,
-    SetGender,
-    Address,
-    setAddress,
-    role,
-    setRole,
-  } = useMain();
+  const { resetStates } = useMain();
 
   useEffect(() => {
     onClose();
     setClose(false);
-    setEmail('');
-    setPassword('');
-    SetFirstname('');
-    SetLastname('');
-    SetContact('');
-    SetGender('');
-    setAddress('');
-    setRole('');
+    resetStates();
   }, [close]);
 
   return (
@@ -79,7 +55,7 @@ function Usermodal({
             ) : Type == 'Instructor' ? (
               <AddUser action={action} usertype={'Instructor'} data={data} />
             ) : (
-              ''
+              <AddUser action={action} usertype={'Section'} data={data} />
             )}
           </ModalBody>
 

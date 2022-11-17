@@ -58,12 +58,16 @@ import Login from './Pages/Login/Login';
 //COMPONENT
 import CardComponent from './Pages/Component/Card/CardComponent';
 import CustomFormController from './Pages/Component/CustomFormController/CustomFormController';
+import CustomSelect from './Pages/Component/CustomSelect/CustomSelect';
 import DeleteData from './Pages/Component/Delete/Delete';
 import EditData from './Pages/Component/Edit/Edit';
 import Header from './Pages/Component/Header/Header';
 import LineGraph from './Pages/Component/LineGraph/LineGraph';
 import TableComponent from './Pages/Component/Table/TableComponent';
 import StudentProfile from './Pages/Component/StudentProfile/StudentProfile';
+
+const toastvariant = 'top-accent';
+const toastposition = 'top-center';
 
 export {
   ArrowLeftIcon,
@@ -76,6 +80,7 @@ export {
   ChevronLeftIcon,
   ChevronRightIcon,
   CustomFormController,
+  CustomSelect,
   DeleteData,
   Divider,
   EditData,
@@ -117,6 +122,8 @@ export {
   ProSidebarProvider,
   Wrap,
   WrapItem,
+  toastposition,
+  toastvariant,
   useMediaQuery,
   useProSidebar,
 };
