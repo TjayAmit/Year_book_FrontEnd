@@ -1,24 +1,58 @@
 import { useState } from 'react';
 import { FaUserAlt, FaLock } from 'react-icons/fa';
+import { useToast } from '@chakra-ui/react';
 import {
   Avatar,
   Box,
   Button,
   CustomFormController,
-  Grid,
-  GridItem,
   Center,
-  Image,
   Heading,
   Text,
+  toastposition,
+  toastvariant,
 } from '../../Packages';
 
+import useMain from '../../Context/Main/MainContext';
+import { useNavigate } from 'react-router-dom';
+
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isSignup, setIsSignup] = useState(false);
+  const toast = useToast();
+  const navigate = useNavigate();
+  const { email, setEmail, password, setPassword, signIn } = useMain();
   const [loading, setLoading] = useState(false);
   const [exception, setException] = useState(false);
+
+  const handleNavigateSignup = e => {
+    e.preventDefault();
+    navigate('/signup');
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const response = await signIn(e);
+
+    if (response === 'success') {
+      toast({
+        title: 'Redirecting!',
+        position: toastposition,
+        variant: toastvariant,
+        status: 'success',
+        duration: 10000,
+        isClosable: true,
+      });
+      navigate('/');
+      return;
+    }
+    toast({
+      title: 'Login Failed!',
+      position: toastposition,
+      variant: toastvariant,
+      status: 'error',
+      duration: 10000,
+      isClosable: true,
+    });
+  };
 
   return (
     <>
@@ -56,8 +90,9 @@ const Login = () => {
             ) : (
               <Box h={5} />
             )}
-            <form>
+            <form onSubmit={e => handleSubmit(e)}>
               <CustomFormController
+                isSignup={false}
                 title={'Email'}
                 type={'email'}
                 value={email}
@@ -66,6 +101,7 @@ const Login = () => {
                 placeholder={'Enter username'}
               />
               <CustomFormController
+                isSignup={false}
                 title={'Password'}
                 type={'password'}
                 value={password}
@@ -90,35 +126,32 @@ const Login = () => {
                 {'forgot password ?'}
               </Button>
               <Button
-                isLoading={!isSignup ? null : loading}
-                loadingText={!isSignup ? null : 'Submitting'}
-                type={isSignup ? null : 'submit'}
-                value={!isSignup ? null : 'Submit'}
+                isLoading={loading}
+                loadingText={loading ? null : 'Submitting'}
+                type={'Submit'}
+                value={'Submit'}
                 mt={5}
                 width={'100%'}
-                bg={isSignup ? 'grey' : 'primary.900'}
+                bg={'primary.900'}
                 _hover={{
-                  bg: isSignup ? 'grey' : 'primary.800',
+                  bg: 'primary.800',
                 }}
-                colors="light.900"
-                onClick={e => (isSignup ? setIsSignup(!isSignup) : null)}
+                color="light.900"
+                onClick={e => handleSubmit(e)}
               >
                 {'Sign In'}
               </Button>{' '}
               <Box h={3}></Box>
               <Button
-                isLoading={!isSignup ? null : loading}
-                loadingText={!isSignup ? null : 'Submitting'}
-                type={isSignup ? null : 'submit'}
-                value={!isSignup ? null : 'Submit'}
+                type={'text'}
                 marginTop="0px"
                 width={'100%'}
-                bg={!isSignup ? 'light.900' : 'light.900'}
+                bg={'light.900'}
                 _hover={{
-                  bg: isSignup ? 'grey' : 'secondary.800',
+                  bg: 'secondary.800',
                 }}
                 color="secondary.900"
-                onClick={e => (isSignup ? setIsSignup(!isSignup) : null)}
+                onClick={e => handleNavigateSignup(e)}
               >
                 {'Create account'}
               </Button>

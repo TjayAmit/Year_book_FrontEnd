@@ -1,10 +1,30 @@
 import { useMemo, useState } from 'react';
 import { Box, Flex, Heading, TableComponent } from '../../Packages';
-import { SectionData } from '../Component/SampleData';
+import { useToast } from '@chakra-ui/react';
+import {
+  SectionPostRequest,
+  SectionPutRequest,
+} from '../../API/Server_Request/Section_Request';
+import useMain from '../../Context/Main/MainContext';
 
 const Section = () => {
+  const toast = useToast();
   const [search, setSearch] = useState('');
   const [close, setClose] = useState(false);
+  const [fetch, setFetch] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const {
+    sectionName,
+    sectionDescription,
+    FK_instructor_ID,
+    resetStates,
+    Section,
+    notif,
+    profileURL,
+    setChangesSection,
+  } = useMain();
+
   const callBack = e => {
     e.preventDefault();
   };
@@ -17,10 +37,14 @@ const Section = () => {
       },
       {
         Header: 'SECTION',
-        accessor: 'name',
+        accessor: 'Name',
       },
       {
-        Header: 'INSTRUCTOR',
+        Header: 'Description',
+        accessor: 'Description',
+      },
+      {
+        Header: 'Instructor',
         accessor: 'instructor',
       },
       {
@@ -30,6 +54,88 @@ const Section = () => {
     ],
     []
   );
+
+  const HandleAdd = async () => {
+    const request = await SectionPostRequest({
+      body: {
+        Name: sectionName,
+        Description: sectionDescription,
+        FK_instructor_ID: FK_instructor_ID,
+      },
+    });
+
+    if (request.data.status === 200) {
+      toast({
+        title: 'Account created.',
+        description: 'User Account Added Successfully!',
+        position: 'top',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+      resetStates();
+      setClose(true);
+      setLoading(false);
+      setFetch(true);
+      setChangesSection(true);
+    }
+
+    if (request.data.status == 500) {
+      toast({
+        title: 'Please fill all Required fields!',
+        description: 'Adding UnSuccessful.',
+        position: 'top',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+    setLoading(false);
+  };
+
+  const HandleUpdate = async props => {
+    const request = await SectionPutRequest({
+      params: props.id,
+      body: {
+        Name: sectionName,
+        Description: sectionDescription,
+        FK_instructor_ID: FK_instructor_ID,
+      },
+    });
+    if (request.data.status == 200) {
+      toast({
+        title: 'Account updated.',
+        description: 'User Account Updated Successfully!',
+        position: 'top',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+      resetStates();
+      setClose(true);
+      setLoading(false);
+      setFetch(true);
+      setChangesSection(true);
+    }
+    if (request.data.status == 500) {
+      toast({
+        title: 'Please fill all Required fields!',
+        description: 'Adding UnSuccessful.',
+        position: 'top',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+    setLoading(false);
+  };
+
+  const filter = Section.filter(
+    x =>
+      x.Name.toLowerCase().includes(search.toLowerCase()) ||
+      x.instructor.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <Box w={'100%'}>
       <Box w={'100%'}>
@@ -41,14 +147,20 @@ const Section = () => {
       </Box>
       <TableComponent
         columns={column}
-        data={SectionData}
+        data={filter}
         search={search}
         setSearch={setSearch}
-        placeholder={'Search section'}
+        placeholder={'Search name'}
         button={'Section'}
+        AddNew={HandleAdd}
+        Update={HandleUpdate}
         callBack={callBack}
         close={close}
         setClose={setClose}
+        loading={loading}
+        setLoading={setLoading}
+        setFetch={setFetch}
+        notif={notif}
       />
     </Box>
   );

@@ -8,6 +8,14 @@ export const InstructorGetRequest = async ({ params }) => {
   return await Get({ url: 'instructor', params: params });
 };
 
+export const InstructorGetALLRequest = async () => {
+  return await Get({ url: 'instructor' });
+};
+
+export const InstructorGetALLSelectionRequest = async () => {
+  return await Get({ url: 'instructor/selection' });
+};
+
 export const InstructorPutRequest = async ({ params, body }) => {
   return await Put({
     url: 'instructor',

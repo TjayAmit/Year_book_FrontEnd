@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import { useMemo, useState } from 'react';
-import { Box, TableComponent, Flex, Heading } from '../../Packages';
-import { UserData } from '../Component/SampleData';
-=======
 import { useMemo, useState, useEffect } from 'react';
 import {
   Box,
@@ -18,12 +13,11 @@ import {
 import useMain from '../../Context/Main/MainContext';
 import { Post, Get, Put } from '../../API/Request_Format';
 import { useToast } from '@chakra-ui/react';
->>>>>>> f10b2bec16d87764563de61028cbc4742c79e1ec
 
 const User = () => {
   const toast = useToast();
   const [search, setSearch] = useState('');
-  // const [fetch, setFetch] = useState(false);
+  const [fetch, setFetch] = useState(false);
   const [close, setClose] = useState(false);
   const [loading, setLoading] = useState(false);
   const [UserData, setUserData] = useState([]);
