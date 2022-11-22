@@ -41,6 +41,7 @@ const Login = () => {
         duration: 10000,
         isClosable: true,
       });
+      navigate('/');
       return;
     }
     toast({

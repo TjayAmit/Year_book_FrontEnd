@@ -11,10 +11,15 @@ import {
   InstructorGetALLSelectionRequest,
 } from '../../API/Server_Request/Instructor_Request';
 import { SectionGetALLRequest } from '../../API/Server_Request/Section_Request';
+import { useCookies } from 'react-cookie';
+
+import { ActiveUserGetRequest } from '../../API/Server_Request/User_Request';
 
 const DataContext = createContext({});
 
 export const MainProvider = ({ children }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+
   const [fetch, setFetch] = useState(false);
   const [user, setUser] = useState({
     loggedIn: false,
@@ -94,13 +99,13 @@ export const MainProvider = ({ children }) => {
 
       console.log(response);
       setNotif(true);
+
       const reduceData = response.data.data;
-      setUser({
-        name: reduceData['name'],
-        email: reduceData['email'],
-        profiel: reduceData['profile'],
-        loggedIn: reduceData['loggedIn'],
-      });
+      sessionStorage.setItem('token', reduceData['token']);
+
+      setCookie('token', reduceData['token'], { path: '/' });
+
+      setUser(reduceData);
 
       return 'success';
     } catch (err) {
@@ -177,7 +182,6 @@ export const MainProvider = ({ children }) => {
       if (response.data.status === 404) {
         return 'failed';
       }
-      console.log(response);
 
       setInstructorSelection(response.data.data);
     } catch (err) {
@@ -196,7 +200,6 @@ export const MainProvider = ({ children }) => {
       if (response.data.status === 404) {
         return 'failed';
       }
-      console.log(response);
 
       setInstructor(response.data.data);
     } catch (err) {
@@ -233,6 +236,26 @@ export const MainProvider = ({ children }) => {
     fetchSectionData();
     setChangesSection(false);
   }, [changesSection]);
+
+  const checkUser = async () => {
+    try {
+      const res = await ActiveUserGetRequest();
+      setUser(res.data.data);
+    } catch (e) {
+      setUser({
+        loggedIn: false,
+      });
+    }
+  };
+
+  const [interval, setInterval] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      checkUser();
+      setInterval(5000);
+    }, [interval]);
+  }, [user]);
 
   return (
     <DataContext.Provider

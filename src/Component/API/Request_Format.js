@@ -6,6 +6,10 @@ export const Post = async ({ url, body }) => {
   });
 };
 
+export const GetAll = async ({ url }) => {
+  return await api.get(url);
+};
+
 export const Get = async ({ url, params }) => {
   return await api.get(url, {
     params: params,
