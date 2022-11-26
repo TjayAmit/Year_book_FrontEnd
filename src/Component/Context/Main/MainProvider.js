@@ -49,7 +49,7 @@ export const MainProvider = ({ children }) => {
   const [InstructorSelection, setInstructorSelection] = useState([]);
 
   const [Section, setSections] = useState([]);
-  const [sectionName, setSectionName] = useState('');
+
   const [sectionDescription, setSectionDescription] = useState('');
   const [FK_instructor_ID, setFK_instructor_ID] = useState('');
 
@@ -250,19 +250,18 @@ export const MainProvider = ({ children }) => {
 
   const [interval, setInterval] = useState(0);
 
-  useEffect(() => {
-    setTimeout(() => {
-      checkUser();
-      setInterval(5000);
-    }, [interval]);
-  }, [user]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     checkUser();
+  //     setInterval(5000);
+  //   }, [interval]);
+  // }, [user]);
 
   //Section
 
   const [Batch_ID, setbatchid] = useState();
   const [sectionname, setSectionName] = useState();
   const [Instructor_id, setInstructor_id] = useState();
-  const [sectionDescription, setSectionDescription] = useState();
 
   const [SectionID, setSectionID] = useState();
 
@@ -317,8 +316,7 @@ export const MainProvider = ({ children }) => {
         roleSelection,
         sexSelection,
         profileURL,
-        sectionName,
-        setSectionName,
+
         sectionDescription,
         setSectionDescription,
         FK_instructor_ID,
