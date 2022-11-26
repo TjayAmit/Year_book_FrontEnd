@@ -260,9 +260,9 @@ export const MainProvider = ({ children }) => {
   //Section
 
   const [Batch_ID, setbatchid] = useState();
-  const [sectionname, setSectionName] = useState();
+  const [sectionname, setSectionNameData] = useState();
   const [Instructor_id, setInstructor_id] = useState();
-  const [sectionDescription, setSectionDescription] = useState();
+  const [sectionDescriptionData, setSectionDescriptionData] = useState();
 
   const [SectionID, setSectionID] = useState();
 

@@ -10,7 +10,6 @@ const Instructor = () => {
   const [close, setClose] = useState(false);
   const [fetch, setFetch] = useState(false);
   const [loading, setLoading] = useState(false);
-<<<<<<< HEAD
 
   const {
     firstname,
@@ -29,48 +28,15 @@ const Instructor = () => {
     profileURL,
     setChangesInstructor,
   } = useMain();
-=======
-  const [UserData, setUserData] = useState([]);
-  const [notif, setNotif] = useState(true);
-  const [sectionData, setSectionData] = useState([]);
->>>>>>> wLandingPage
 
   const callBack = e => {
     e.preventDefault();
   };
 
-<<<<<<< HEAD
   // useEffect(() => {
   //   fetch_data();
   //   setFetch(false);
   // }, [fetch]);
-=======
-  const fetch_data = async () => {
-    const request = await Get({
-      url: 'admin/user',
-      params: {},
-    });
-
-    if (request.data.status == 200) {
-      setUserData(request.data.data.filter(x => x.UserType == 1));
-      setNotif(false);
-    }
-
-    const sectionrequest = await Get({
-      url: 'admin/custom_section_select',
-      params: {},
-    });
-
-    if (sectionrequest.data.status == 200) {
-      setSectionData(sectionrequest.data.data);
-    }
-  };
-
-  useEffect(() => {
-    fetch_data();
-    setFetch(false);
-  }, [fetch]);
->>>>>>> wLandingPage
 
   const column = useMemo(
     () => [
@@ -110,30 +76,6 @@ const Instructor = () => {
     []
   );
 
-<<<<<<< HEAD
-=======
-  const {
-    email,
-    password,
-    firstname,
-    lastname,
-    contact,
-    setEmail,
-    setPassword,
-    SetFirstname,
-    SetLastname,
-    SetContact,
-    Gender,
-    SetGender,
-    Address,
-    setAddress,
-    role,
-    setRole,
-    id,
-    setSectionID,
-    SectionID,
-  } = useMain();
->>>>>>> wLandingPage
   const HandleAdd = async () => {
     const request = await Post({
       url: 'admin/user',
@@ -141,22 +83,11 @@ const Instructor = () => {
         Email: email,
         profile: profileURL,
         Password: password,
-<<<<<<< HEAD
         Firstname: firstname,
         Middlename: middlename,
         Lastname: lastname,
         Sex: sex,
         FK_section_ID: FK_section_ID,
-=======
-        isVerified: 0,
-        Section_ID: SectionID,
-        Batch_ID: 0,
-        Payment: 0,
-        UserType: 1,
-        firstlogin: 0,
-        url: null,
-        Payment_Method: null,
->>>>>>> wLandingPage
       },
     });
 
@@ -198,21 +129,11 @@ const Instructor = () => {
         role: role,
         profile: profileURL,
         Password: password,
-<<<<<<< HEAD
         Firstname: firstname,
         Middlename: middlename,
         Lastname: lastname,
         Sex: sex,
         FK_section_ID: FK_section_ID,
-=======
-        Section_ID: SectionID,
-        Batch_ID: 0,
-        Payment: 0,
-        UserType: 1,
-        firstlogin: 0,
-        url: null,
-        Payment_Method: null,
->>>>>>> wLandingPage
       },
     });
     if (request.data.status == 200) {
@@ -275,7 +196,7 @@ const Instructor = () => {
         setLoading={setLoading}
         setFetch={setFetch}
         notif={notif}
-        sectionData={sectionData}
+        sectionData={sections}
       />
     </Box>
   );
