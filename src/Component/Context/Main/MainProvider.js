@@ -253,7 +253,7 @@ export const MainProvider = ({ children }) => {
   useEffect(() => {
     setTimeout(() => {
       checkUser();
-      setInterval(5000);
+      setInterval(10000);
     }, [interval]);
   }, [user]);
 

@@ -16,10 +16,6 @@ const RouteComponent = () => {
   const { user } = useMain();
   const location = useLocation();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Outlet />}>
