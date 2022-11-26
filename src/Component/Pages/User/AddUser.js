@@ -12,8 +12,13 @@ import {
   CustomSelect,
 } from '../../Packages';
 import useMain from '../../Context/Main/MainContext';
+<<<<<<< HEAD
 
 function AddUser({ action, data, usertype }) {
+=======
+import Select from 'react-select';
+function AddUser({ action, data, usertype, sectionData }) {
+>>>>>>> wLandingPage
   const {
     email,
     setEmail,
@@ -28,6 +33,7 @@ function AddUser({ action, data, usertype }) {
     sex,
     setSex,
     setId,
+<<<<<<< HEAD
     FK_section_ID,
     setFK_section_ID,
     sexSelection,
@@ -39,6 +45,10 @@ function AddUser({ action, data, usertype }) {
     FK_instructor_ID,
     setFK_instructor_ID,
     InstructorSelection,
+=======
+    setSectionID,
+    SectionID,
+>>>>>>> wLandingPage
   } = useMain();
   const passwordRef = useRef();
 
@@ -51,9 +61,20 @@ function AddUser({ action, data, usertype }) {
       setSex(data.Sex);
       setEmail(data.Email);
       setId(data.id);
+      setSectionID(data.Section_ID);
     }
   }, []);
 
+  const genderoptions = [
+    { value: 'Male', label: 'Male' },
+    { value: 'Female', label: 'Female' },
+  ];
+
+  const Utypeoptions = [
+    { value: '0', label: 'Admin' },
+    { value: '1', label: 'Instructor' },
+    { value: '2', label: 'Client' },
+  ];
   return (
     <div>
       <Flex mb={2} columnGap={5}>
@@ -115,7 +136,39 @@ function AddUser({ action, data, usertype }) {
         ) : null}
       </Flex>
 
+<<<<<<< HEAD
       {usertype == 'client' ? (
+=======
+      <Box mb={2}>
+        <FormControl isRequired>
+          <FormLabel>Gender</FormLabel>
+
+          <Select
+            defaultValue={action == 'update' ? data.Gender : null}
+            onChange={e => {
+              SetGender(e.value);
+            }}
+            options={genderoptions}
+          />
+        </FormControl>
+      </Box>
+      {usertype == 'Instructor' || usertype == 'Client' ? (
+        <Box mb={2}>
+          <FormControl isRequired>
+            <FormLabel>Select Section</FormLabel>
+            <Select
+              defaultValue={action == 'update' ? data.Section_ID : null}
+              onChange={e => {
+                setSectionID(e.value);
+              }}
+              options={sectionData}
+            />
+          </FormControl>
+        </Box>
+      ) : null}
+
+      {usertype == 'Client' || usertype == 'Instructor' ? (
+>>>>>>> wLandingPage
         <Box mb={2}>
           <FormControl isRequired>
             <FormLabel>Address </FormLabel>
@@ -127,7 +180,25 @@ function AddUser({ action, data, usertype }) {
             />
           </FormControl>
         </Box>
+<<<<<<< HEAD
       ) : null}
+=======
+      ) : (
+        <Box mb={2}>
+          <FormControl isRequired>
+            <FormLabel>Role </FormLabel>
+
+            <Select
+              defaultValue={action == 'update' ? data.UserType : null}
+              onChange={e => {
+                setRole(e.value);
+              }}
+              options={Utypeoptions}
+            />
+          </FormControl>
+        </Box>
+      )}
+>>>>>>> wLandingPage
 
       <Box mb={2}>
         {usertype === 'client' ||

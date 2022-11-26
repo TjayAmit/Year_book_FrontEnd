@@ -13,6 +13,7 @@ export const EditData = ({
   loading,
   setLoading,
   Update,
+  sectionData,
 }) => {
   return (
     <>
@@ -20,6 +21,7 @@ export const EditData = ({
         Update={Update}
         data={data}
         action={'update'}
+        sectionData={sectionData}
         BtnOpen={
           <>
             <IconButton color={'green.400'} onClick={() => {}}>

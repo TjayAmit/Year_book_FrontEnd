@@ -49,6 +49,9 @@ const TableComponent = ({
   setFetch,
   Update,
   notif,
+  batchData,
+  sectionData,
+  InstructorData,
 }) => {
   const {
     getTableProps,
@@ -135,6 +138,8 @@ const TableComponent = ({
               Type={button}
               loading={loading}
               setLoading={setLoading}
+              batchData={batchData}
+              sectionData={sectionData}
             />
             <Select
               w={32}
@@ -217,6 +222,7 @@ const TableComponent = ({
                               setClose={setClose}
                               loading={loading}
                               setLoading={setLoading}
+                              sectionData={sectionData}
                             />
                             <DeleteData
                               id={cell.row.original.id}
@@ -255,6 +261,38 @@ const TableComponent = ({
                             {cell.row.original.Firstname +
                               ' ' +
                               cell.row.original.Lastname}
+                          </>
+                        ) : cell.column.Header === 'INSTRUCTOR' ? (
+                          <>
+                            {InstructorData.filter(
+                              x => x.Section_ID == cell.row.original.id
+                            ).length >= 1 ? (
+                              InstructorData.filter(
+                                x => x.Section_ID == cell.row.original.id
+                              ).map(data => {
+                                return (
+                                  <>{data.Firstname + ' ' + data.Lastname}</>
+                                );
+                              })
+                            ) : (
+                              <>
+                                <Text color={'gray.500'} fontSize={'14'}>
+                                  No Instructor yet..
+                                </Text>
+                              </>
+                            )}
+                          </>
+                        ) : cell.column.Header === 'SECTION' ? (
+                          <>
+                            {cell.row.original.Section_ID
+                              ? sectionData
+                                  .filter(
+                                    x => x.value == cell.row.original.Section_ID
+                                  )
+                                  .map(s => {
+                                    return s.label;
+                                  })
+                              : cell.render('Cell')}
                           </>
                         ) : (
                           cell.render('Cell')
