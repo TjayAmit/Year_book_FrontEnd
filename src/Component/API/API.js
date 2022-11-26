@@ -11,5 +11,11 @@ const api = new axios.create({
     Authorization: `Bearer ${sessionStorage.getItem('token')}`,
   },
 });
+//interceptor to rebuild for token configuration and authorization
+api.interceptors.request.use(function (config) {
+  const token = sessionStorage.getItem('token');
+  config.headers.Authorization = token ? `Bearer ${token}` : '';
+  return config;
+});
 
 export default api;
