@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
 import { Login } from '../Packages';
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet,
-} from 'react-router-dom';
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
 import RouteData from './RouteData.js';
 import ProtectedRoute from './ProtectedRoute.js';
@@ -19,45 +14,43 @@ import Register from '../Pages/Registration/Register';
 
 const RouteComponent = () => {
   const { user } = useMain();
+  const location = useLocation();
 
   useEffect(() => {
     console.log(user);
   }, [user]);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Outlet />}>
-          <Route path="/" element={<ProtectedRoute user={user} />}>
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Register />} />
-            <Route path="DPLMHS-yearbook" element={<Index />} />
-          </Route>
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          {/* <Route path="/yearbook" element={<Yearbook />} /> */}
+    <Routes location={location} key={location.pathname}>
+      <Route path="/" element={<Outlet />}>
+        <Route path="/" element={<ProtectedRoute user={user} />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Register />} />
+        <Route path="DPLMHS-yearbook" element={<Index />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        {/* <Route path="/yearbook" element={<Yearbook />} /> */}
 
-          <Route
-            path="/home/*"
-            element={
-              <Layout>
-                <Routes>
-                  {RouteData.map(data => {
-                    return (
-                      <Route
-                        key={data.index}
-                        path={data.href}
-                        element={data.element}
-                      />
-                    );
-                  })}
-                </Routes>
-              </Layout>
-            }
-          />
-        </Route>
-      </Routes>
-    </Router>
+        <Route
+          path="/home/*"
+          element={
+            <Layout>
+              <Routes>
+                {RouteData.map(data => {
+                  return (
+                    <Route
+                      key={data.index}
+                      path={data.href}
+                      element={data.element}
+                    />
+                  );
+                })}
+              </Routes>
+            </Layout>
+          }
+        />
+      </Route>
+    </Routes>
   );
 };
 

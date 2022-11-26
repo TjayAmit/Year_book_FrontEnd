@@ -3,6 +3,7 @@ import { Box, Flex, Heading, TableComponent, Text } from '../../Packages';
 import useMain from '../../Context/Main/MainContext';
 import { Post, Get, Put } from '../../API/Request_Format';
 import { useToast } from '@chakra-ui/react';
+import { InstructorPostRequest } from '../../API/Server_Request/Instructor_Request';
 
 const Instructor = () => {
   const toast = useToast();
@@ -77,8 +78,7 @@ const Instructor = () => {
   );
 
   const HandleAdd = async () => {
-    const request = await Post({
-      url: 'admin/user',
+    const request = await InstructorPostRequest({
       body: {
         Email: email,
         profile: profileURL,
@@ -196,7 +196,7 @@ const Instructor = () => {
         setLoading={setLoading}
         setFetch={setFetch}
         notif={notif}
-        //sectionData={sectionData}
+        sectionData={sections}
       />
     </Box>
   );

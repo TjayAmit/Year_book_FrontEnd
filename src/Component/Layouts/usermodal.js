@@ -59,7 +59,7 @@ function Usermodal({
                 sectionData={sectionData}
               />
             ) : Type == 'Section' ? (
-              <SectionModal action={action} data={data} />
+              <SectionModal action={action} data={data} Update={Update} />
             ) : (
               <AddUser action={action} usertype={'Section'} data={data} />
             )}

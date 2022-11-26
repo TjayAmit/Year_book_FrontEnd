@@ -39,7 +39,10 @@ function AddUser({ action, data, usertype }) {
     FK_instructor_ID,
     setFK_instructor_ID,
     InstructorSelection,
+    setSectionID,
+    customSection,
   } = useMain();
+
   const passwordRef = useRef();
 
   useEffect(() => {
@@ -55,16 +58,6 @@ function AddUser({ action, data, usertype }) {
     }
   }, []);
 
-  const genderoptions = [
-    { value: 'Male', label: 'Male' },
-    { value: 'Female', label: 'Female' },
-  ];
-
-  const Utypeoptions = [
-    { value: '0', label: 'Admin' },
-    { value: '1', label: 'Instructor' },
-    { value: '2', label: 'Client' },
-  ];
   return (
     <div>
       <Flex mb={2} columnGap={5}>
@@ -147,7 +140,7 @@ function AddUser({ action, data, usertype }) {
           <CustomSelect
             title={'Section'}
             value={FK_section_ID}
-            datas={Section}
+            datas={customSection}
             setValue={setFK_section_ID}
             mt={'1.27rem'}
           />

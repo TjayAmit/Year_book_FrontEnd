@@ -2,8 +2,11 @@ import { MdDelete } from 'react-icons/md';
 import { IconButton } from '../../../Packages';
 import swal from 'sweetalert';
 import { Delete } from '../../../API/Request_Format';
+import { SectionDeleteRequest } from '../../../API/Server_Request/Section_Request';
+import useMain from '../../../Context/Main/MainContext';
 import { useToast } from '@chakra-ui/react';
 const DeleteData = ({ id, Type, setFetch }) => {
+  const { setChangesSection } = useMain();
   const toast = useToast();
   //USE SWAL FOR DELETING , PARA BASIC
 
@@ -36,13 +39,13 @@ const DeleteData = ({ id, Type, setFetch }) => {
       };
 
       const sectionDelete = async () => {
-        const result = await Delete({
-          url: 'admin/section',
+        const result = await SectionDeleteRequest({
+          url: 'section',
           params: { id: id },
         });
 
         if (result.status == 200) {
-          setFetch(true);
+          setChangesSection(true);
 
           success();
         }

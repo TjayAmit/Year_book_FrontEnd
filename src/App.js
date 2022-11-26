@@ -1,6 +1,7 @@
 // import { Box, Login } from './Component/Packages';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import RouteComponent from './Component/Route/RoutesComponent.js';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   const theme = extendTheme({
@@ -28,7 +29,9 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      <RouteComponent />
+      <Router>
+        <RouteComponent />
+      </Router>
     </ChakraProvider>
   );
 }

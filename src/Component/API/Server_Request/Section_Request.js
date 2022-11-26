@@ -8,6 +8,10 @@ export const SectionGetALLRequest = async () => {
   return await Get({ url: 'section' });
 };
 
+export const SectionGetCustomRequest = async () => {
+  return await Get({ url: 'custom_section_select' });
+};
+
 export const SectionGetRequest = async ({ params }) => {
   return await Get({ url: 'section', params: params });
 };

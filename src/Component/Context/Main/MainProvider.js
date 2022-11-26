@@ -10,7 +10,10 @@ import {
   InstructorGetALLRequest,
   InstructorGetALLSelectionRequest,
 } from '../../API/Server_Request/Instructor_Request';
-import { SectionGetALLRequest } from '../../API/Server_Request/Section_Request';
+import {
+  SectionGetALLRequest,
+  SectionGetCustomRequest,
+} from '../../API/Server_Request/Section_Request';
 import { useCookies } from 'react-cookie';
 
 import { ActiveUserGetRequest } from '../../API/Server_Request/User_Request';
@@ -22,7 +25,7 @@ export const MainProvider = ({ children }) => {
 
   const [fetch, setFetch] = useState(false);
   const [user, setUser] = useState({
-    loggedIn: false,
+    loggedIn: true,
     role: 0,
     name: 'Mang Juan',
   });
@@ -56,6 +59,8 @@ export const MainProvider = ({ children }) => {
   const [changesInstructor, setChangesInstructor] = useState(false);
   const [changesSection, setChangesSection] = useState(false);
 
+  const [updateID, setUpdateID] = useState();
+  const [customSection, setCustomSections] = useState([]);
   const roleSelection = [
     {
       id: 1,
@@ -230,6 +235,21 @@ export const MainProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
+
+    try {
+      const response = await SectionGetCustomRequest();
+
+      if (response.data.status === 500) {
+        return 'failed';
+      }
+
+      if (response.data.status === 404) {
+        return 'failed';
+      }
+
+      setCustomSections(response.data.data);
+      setNotif(false);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -260,7 +280,7 @@ export const MainProvider = ({ children }) => {
   //Section
 
   const [Batch_ID, setbatchid] = useState();
-  const [sectionname, setSectionName] = useState();
+  const [sectionname, setSectionNameData] = useState();
   const [Instructor_id, setInstructor_id] = useState();
 
   const [SectionID, setSectionID] = useState();
@@ -271,7 +291,7 @@ export const MainProvider = ({ children }) => {
         Batch_ID,
         setbatchid,
         sectionname,
-        setSectionName,
+        setSectionNameData,
         Instructor_id,
         setInstructor_id,
         sectionDescription,
@@ -324,6 +344,10 @@ export const MainProvider = ({ children }) => {
         InstructorSelection,
         setChangesInstructor,
         setChangesSection,
+        updateID,
+        setUpdateID,
+        customSection,
+        setCustomSections,
       }}
     >
       {children}

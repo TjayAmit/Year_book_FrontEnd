@@ -9,22 +9,23 @@ import {
 } from '@chakra-ui/react';
 
 import useMain from '../../Context/Main/MainContext';
-function SectionModal({ data, action }) {
+function SectionModal({ data, action, Update }) {
   const {
     sectionname,
-    setSectionName,
+    setSectionNameData,
     Instructor_id,
     setInstructor_id,
     sectionDescription,
     setSectionDescription,
-    setId,
+    updateID,
+    setUpdateID,
   } = useMain();
 
   useEffect(() => {
     if (action == 'update') {
-      setSectionName(data.Name);
+      setSectionNameData(data.Name);
       setSectionDescription(data.Description);
-      setId(data.id);
+      setUpdateID(data.id);
     }
   }, []);
   return (
@@ -35,7 +36,7 @@ function SectionModal({ data, action }) {
           <Input
             defaultValue={action == 'update' ? data.Name : null}
             onChange={e => {
-              setSectionName(e.target.value);
+              setSectionNameData(e.target.value);
             }}
           />
         </FormControl>

@@ -17,7 +17,8 @@ const Section = () => {
   const [loading, setLoading] = useState(false);
 
   const {
-    sectionName,
+    sectionname,
+    setSectionNameData,
     sectionDescription,
     FK_instructor_ID,
     resetStates,
@@ -25,35 +26,39 @@ const Section = () => {
     notif,
     profileURL,
     setChangesSection,
+    setSectionData,
+    setInstructorData,
+    updateID,
   } = useMain();
 
   const callBack = e => {
     e.preventDefault();
   };
 
-  const fetch_data = async () => {
-    const request = await Get({
-      url: 'admin/section',
-      params: {},
-    });
-    if (request.data.status == 200) {
-      // setSectionData(request.data.data);
-    }
+  // const fetch_data = async () => {
+  //   const request = await Get({
+  //     url: 'admin/section',
+  //     params: {},
+  //   });
+  //   if (request.data.status == 200) {
+  //     //setSecData(request.data.data);
+  //   }
 
-    const InstructorRequest = await Get({
-      url: 'admin/user',
-      params: {},
-    });
+  //   const InstructorRequest = await Get({
+  //     url: 'admin/user',
+  //     params: {},
+  //   });
 
-    if (InstructorRequest.data.status == 200) {
-      // setInstructorData(
-      //   InstructorRequest.data.data.filter(x => x.UserType == 1)
-      // );
-    }
-  };
+  //   if (InstructorRequest.data.status == 200) {
+  //     // setInstructorData(
+  //     //   InstructorRequest.data.data.filter(x => x.UserType == 1)
+  //     // );
+  //   }
+  // };
 
   useEffect(() => {
-    fetch_data();
+    //fetch_data();
+
     setFetch(false);
   }, [fetch]);
 
@@ -86,7 +91,7 @@ const Section = () => {
   const HandleAdd = async () => {
     const request = await SectionPostRequest({
       body: {
-        Name: sectionName,
+        Name: sectionname,
         Description: sectionDescription,
         FK_instructor_ID: FK_instructor_ID,
       },
@@ -123,9 +128,9 @@ const Section = () => {
 
   const HandleUpdate = async props => {
     const request = await SectionPutRequest({
-      params: props.id,
+      params: updateID,
       body: {
-        Name: sectionName,
+        Name: sectionname,
         Description: sectionDescription,
         FK_instructor_ID: FK_instructor_ID,
       },
@@ -158,10 +163,8 @@ const Section = () => {
     setLoading(false);
   };
 
-  const filter = Section.filter(
-    x =>
-      x.Name.toLowerCase().includes(search.toLowerCase()) ||
-      x.instructor.toLowerCase().includes(search.toLowerCase())
+  const filter = Section.filter(x =>
+    x.Name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
