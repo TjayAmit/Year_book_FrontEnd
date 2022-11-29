@@ -4,6 +4,7 @@ import { MdAddCircleOutline } from 'react-icons/md';
 import Usermodal from '../../../Layouts/usermodal';
 import notfound from '../../../../Asset/notfound.svg';
 import { Progress } from '@chakra-ui/react';
+import useMain from '../../../Context/Main/MainContext';
 import {
   ArrowRightIcon,
   ArrowLeftIcon,
@@ -78,69 +79,79 @@ const TableComponent = ({
   );
 
   let i = 0;
-
+  const { Instructor, userData } = useMain();
   return (
     <>
       <Box w={'100%'}>
         <Flex h={'40px'} justifyContent={'space-between'}>
           <Box w={'15rem'} h={'20px'} mt={5}>
-            <InputGroup>
-              <InputLeftElement pointerEvents="none" children={<BiSearch />} />
-              <Input
-                type={'text'}
-                value={search}
-                placeholder={placeholder}
-                fontSize={13}
-                focusBorderColor={'#120e63'}
-                onChange={e => setSearch(e.target.value)}
-                bg="rgba(0,0,0,0.1)"
-                border={'none'}
-                rounded={8}
-                _hover={{
-                  bg: 'rgba(0,0,0,0.1)',
-                  border: 'none',
-                  rounded: 6,
-                }}
-                _focus={{
-                  bg: 'white',
-                  variant: 'unstyled',
-                  border: 'none',
-                  borderBottom: '1px solid grey',
-                  rounded: 6,
-                }}
-              />
-            </InputGroup>
+            {button == 'User' ? (
+              ''
+            ) : (
+              <InputGroup>
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<BiSearch />}
+                />
+                <Input
+                  type={'text'}
+                  value={search}
+                  placeholder={placeholder}
+                  fontSize={13}
+                  focusBorderColor={'#120e63'}
+                  onChange={e => setSearch(e.target.value)}
+                  bg="rgba(0,0,0,0.1)"
+                  border={'none'}
+                  rounded={8}
+                  _hover={{
+                    bg: 'rgba(0,0,0,0.1)',
+                    border: 'none',
+                    rounded: 6,
+                  }}
+                  _focus={{
+                    bg: 'white',
+                    variant: 'unstyled',
+                    border: 'none',
+                    borderBottom: '1px solid grey',
+                    rounded: 6,
+                  }}
+                />
+              </InputGroup>
+            )}
           </Box>
           <Flex columnGap={2}>
-            <Usermodal
-              AddNew={AddNew}
-              BtnOpen={
-                <Button
-                  bg={'#120e63'}
-                  color={'white'}
-                  _hover={{
-                    bg: '#120e63',
-                  }}
-                  mt={5}
-                  h={'32px'}
-                  columnGap={2}
-                  fontSize={'16'}
-                  fontWeight={'400'}
-                  onClick={callBack}
-                >
-                  <MdAddCircleOutline size={'1.5rem'} />
-                  {button}
-                </Button>
-              }
-              BtnSave={'Save ' + button}
-              close={close}
-              setClose={setClose}
-              Type={button}
-              loading={loading}
-              setLoading={setLoading}
-              batchData={batchData}
-              sectionData={sectionData}
-            />
+            {button == 'User' ? null : (
+              <Usermodal
+                AddNew={AddNew}
+                BtnOpen={
+                  <Button
+                    bg={'#120e63'}
+                    color={'white'}
+                    _hover={{
+                      bg: '#120e63',
+                    }}
+                    mt={5}
+                    h={'32px'}
+                    columnGap={2}
+                    fontSize={'16'}
+                    fontWeight={'400'}
+                    onClick={callBack}
+                  >
+                    <MdAddCircleOutline size={'1.5rem'} />
+                    {button}
+                  </Button>
+                }
+                BtnSave={'Save ' + button}
+                close={close}
+                setClose={setClose}
+                Type={button}
+                loading={loading}
+                setLoading={setLoading}
+                batchData={batchData}
+                sectionData={sectionData}
+              />
+            )}
+
             <Select
               w={32}
               mt={5}
@@ -238,13 +249,25 @@ const TableComponent = ({
                           <Avatar src={cell.value} />
                         ) : cell.column.Header === 'ROLE' ? (
                           <>
-                            {cell.value == 0 ? (
-                              <Text>Admin</Text>
-                            ) : cell.value == 1 ? (
-                              <Text>Instructor</Text>
-                            ) : cell.value == 2 ? (
-                              <Text>Client</Text>
-                            ) : null}
+                            {button == 'User' ? (
+                              <>
+                                {cell.row.original.FK_role_ID == 1
+                                  ? 'Admin'
+                                  : cell.row.original.FK_role_ID == 2
+                                  ? 'Instructor'
+                                  : 'Student'}
+                              </>
+                            ) : (
+                              <>
+                                {cell.value == 0 ? (
+                                  <Text>Admin</Text>
+                                ) : cell.value == 1 ? (
+                                  <Text>Instructor</Text>
+                                ) : cell.value == 2 ? (
+                                  <Text>Client</Text>
+                                ) : null}
+                              </>
+                            )}
                           </>
                         ) : cell.column.Header === 'STATUS' ? (
                           <>
@@ -258,16 +281,32 @@ const TableComponent = ({
                           </>
                         ) : cell.column.Header === 'NAME' ? (
                           <>
-                            {cell.row.original.Firstname +
-                              ' ' +
-                              cell.row.original.Lastname}
+                            {button == 'User' ? (
+                              <>
+                                <span style={{ textTransform: 'uppercase' }}>
+                                  {cell.row.original.iname == null
+                                    ? ''
+                                    : cell.row.original.iname}
+
+                                  {cell.row.original.aname == null
+                                    ? ''
+                                    : cell.row.original.aname}
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                {cell.row.original.Firstname +
+                                  ' ' +
+                                  cell.row.original.Lastname}
+                              </>
+                            )}
                           </>
                         ) : cell.column.Header === 'INSTRUCTOR' ? (
                           <>
-                            {InstructorData.filter(
+                            {Instructor.filter(
                               x => x.Section_ID == cell.row.original.id
                             ).length >= 1 ? (
-                              InstructorData.filter(
+                              Instructor.filter(
                                 x => x.Section_ID == cell.row.original.id
                               ).map(data => {
                                 return (
@@ -293,6 +332,62 @@ const TableComponent = ({
                                     return s.label;
                                   })
                               : cell.render('Cell')}
+                          </>
+                        ) : cell.column.Header === 'Instructor' ? (
+                          <>
+                            {Instructor.filter(
+                              x => x.FK_section_ID == cell.row.original.id
+                            ).length >= 1 ? (
+                              Instructor.filter(
+                                x => x.FK_section_ID == cell.row.original.id
+                              ).map(i => {
+                                return (
+                                  <>
+                                    <span
+                                      style={{ textTransform: 'uppercase' }}
+                                    >
+                                      {i.Firstname + ' ' + i.Lastname}
+                                    </span>
+                                  </>
+                                );
+                              })
+                            ) : (
+                              <>
+                                <span
+                                  style={{ fontSize: '13px', color: '#94202a' }}
+                                >
+                                  {' '}
+                                  No Instructor yet..
+                                </span>
+                              </>
+                            )}{' '}
+                          </>
+                        ) : cell.column.Header === 'Email' ? (
+                          <>
+                            {userData
+                              .filter(x => x.id == cell.row.original.id)
+                              .map(u => {
+                                return <>{u.email}</>;
+                              })}
+                          </>
+                        ) : cell.column.Header === 'Name and Description' ? (
+                          <>
+                            <span style={{ fontSize: '13px' }}>
+                              <span
+                                style={{
+                                  fontWeight: 'bolder',
+                                  textTransform: 'uppercase',
+                                }}
+                              >
+                                {cell.row.original.Name}
+                              </span>
+                              <br />
+                              <span style={{ fontSize: '11px', color: 'grey' }}>
+                                Description:
+                              </span>
+                              <br />
+                              {cell.row.original.Description}
+                            </span>
                           </>
                         ) : (
                           cell.render('Cell')

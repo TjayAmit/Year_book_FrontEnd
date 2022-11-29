@@ -27,7 +27,8 @@ function AddUser({ action, data, usertype }) {
     SetLastname,
     sex,
     setSex,
-    setId,
+    updateID,
+    setUpdateID,
     FK_section_ID,
     setFK_section_ID,
     sexSelection,
@@ -53,7 +54,8 @@ function AddUser({ action, data, usertype }) {
       SetLastname(data.Lastname);
       setSex(data.Sex);
       setEmail(data.Email);
-      setId(data.id);
+      setUpdateID(data.id);
+      setFK_section_ID(data.FK_section_ID);
       // setSectionID(data.Section_ID);
     }
   }, []);

@@ -3,10 +3,12 @@ import { IconButton } from '../../../Packages';
 import swal from 'sweetalert';
 import { Delete } from '../../../API/Request_Format';
 import { SectionDeleteRequest } from '../../../API/Server_Request/Section_Request';
+import { InstructorDeleteRequest } from '../../../API/Server_Request/Instructor_Request';
+import { BatchDeleteRequest } from '../../../API/Server_Request/Batch_Request';
 import useMain from '../../../Context/Main/MainContext';
 import { useToast } from '@chakra-ui/react';
 const DeleteData = ({ id, Type, setFetch }) => {
-  const { setChangesSection } = useMain();
+  const { setChangesSection, setChangesInstructor } = useMain();
   const toast = useToast();
   //USE SWAL FOR DELETING , PARA BASIC
 
@@ -38,6 +40,18 @@ const DeleteData = ({ id, Type, setFetch }) => {
         }
       };
 
+      const InstructorDelete = async () => {
+        const result = await InstructorDeleteRequest({
+          params: { id: id },
+        });
+
+        if (result.status == 200) {
+          setChangesInstructor(true);
+
+          success();
+        }
+      };
+
       const sectionDelete = async () => {
         const result = await SectionDeleteRequest({
           url: 'section',
@@ -51,6 +65,18 @@ const DeleteData = ({ id, Type, setFetch }) => {
         }
       };
 
+      const BatchDelete = async () => {
+        const result = await BatchDeleteRequest({
+          url: 'batch',
+          params: { id: id },
+        });
+        if (result.status == 200) {
+          setChangesInstructor(true);
+
+          success();
+        }
+      };
+
       switch (Type) {
         case 'User':
           userDelete();
@@ -59,11 +85,15 @@ const DeleteData = ({ id, Type, setFetch }) => {
           userDelete();
           break;
         case 'Instructor':
-          userDelete();
+          InstructorDelete();
           break;
 
         case 'Section':
           sectionDelete();
+          break;
+
+        case 'Batch':
+          BatchDelete();
           break;
       }
     };

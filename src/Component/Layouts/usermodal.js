@@ -13,7 +13,7 @@ import {
 import AddUser from '../Pages/User/AddUser';
 import useMain from '../Context/Main/MainContext';
 import SectionModal from '../Pages/Section/SectionModal';
-
+import BatchModal from '../Pages/Batch/BatchModal';
 function Usermodal({
   Header,
   Body,
@@ -60,6 +60,10 @@ function Usermodal({
               />
             ) : Type == 'Section' ? (
               <SectionModal action={action} data={data} Update={Update} />
+            ) : Type == 'Batch' ? (
+              <>
+                <BatchModal action={action} data={data} />
+              </>
             ) : (
               <AddUser action={action} usertype={'Section'} data={data} />
             )}

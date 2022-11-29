@@ -20,30 +20,13 @@ const User = () => {
   const [fetch, setFetch] = useState(false);
   const [close, setClose] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [UserData, setUserData] = useState([]);
+
   const [notif, setNotif] = useState(true);
   const [sort, setSort] = useState('');
 
   const callBack = e => {
     e.preventDefault();
   };
-
-  const fetch_data = async () => {
-    const request = await Get({
-      url: 'admin/user',
-      params: {},
-    });
-
-    if (request.data.status == 200) {
-      setUserData(request.data.data);
-      setNotif(false);
-    }
-  };
-
-  useEffect(() => {
-    fetch_data();
-    setFetch(false);
-  }, [fetch]);
 
   const column = useMemo(
     () => [
@@ -63,151 +46,27 @@ const User = () => {
         Header: 'ROLE',
         accessor: 'UserType',
       },
-      {
-        Header: 'ACTION',
-        accessor: 'action',
-      },
+      // {
+      //   Header: 'ACTION',
+      //   accessor: 'action',
+      // },
     ],
     []
   );
 
-  const {
-    email,
-    password,
-    firstname,
-    lastname,
-    contact,
-    setEmail,
-    setPassword,
-    SetFirstname,
-    SetLastname,
-    SetContact,
-    Gender,
-    SetGender,
-    Address,
-    setAddress,
-    role,
-    setRole,
-    id,
-  } = useMain();
-  const HandleAdd = async () => {
-    const request = await Post({
-      url: 'admin/user',
-      body: {
-        Firstname: firstname,
-        Lastname: lastname,
-        Email: email,
-        Contact: contact,
-        Gender: Gender,
-        Address: null,
-        Section_ID: 0,
-        Batch_ID: 0,
-        Password: password,
-        isVerified: 0,
-        Section_ID: 0,
-        Batch_ID: 0,
-        Payment: 0,
-        UserType: role,
-        firstlogin: 0,
-        url: null,
-        Payment_Method: null,
-      },
-    });
-
-    if (request.data.status == 200) {
-      toast({
-        title: 'Account created.',
-        description: 'User Account Added Successfully!',
-        position: 'top',
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      });
-      setEmail('');
-      setPassword('');
-      SetFirstname('');
-      SetLastname('');
-      SetContact('');
-      setClose(true);
-      setLoading(false);
-      setFetch(true);
-    }
-
-    if (request.data.status == 500) {
-      toast({
-        title: 'Please fill all Required fields!',
-        description: 'Adding UnSuccessful.',
-        position: 'top',
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-    setLoading(false);
-  };
-
-  const HandleUpdate = async () => {
-    const request = await Put({
-      url: 'admin/user',
-      params: id,
-      body: {
-        Firstname: firstname,
-        Lastname: lastname,
-        Email: email,
-        Contact: contact,
-        Gender: Gender,
-        Address: null,
-        Section_ID: 0,
-        Batch_ID: 0,
-        isVerified: 0,
-        Password: password,
-        Section_ID: 0,
-        Batch_ID: 0,
-        Payment: 0,
-        UserType: role,
-        firstlogin: 0,
-        url: null,
-        Payment_Method: null,
-      },
-    });
-    if (request.data.status == 200) {
-      toast({
-        title: 'Account updated.',
-        description: 'User Account Updated Successfully!',
-        position: 'top',
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      });
-      setEmail('');
-      setPassword('');
-      SetFirstname('');
-      SetLastname('');
-      SetContact('');
-      setClose(true);
-      setLoading(false);
-      setFetch(true);
-    }
-    if (request.data.status == 500) {
-      toast({
-        title: 'Please fill all Required fields!',
-        description: 'Adding UnSuccessful.',
-        position: 'top',
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-    setLoading(false);
-  };
+  const { customUserData } = useMain();
 
   const filter = sort
-    ? UserData.filter(x => x.UserType == sort)
-    : UserData.filter(
-        x =>
-          x.Firstname.toLowerCase().includes(search.toLowerCase()) ||
-          x.Lastname.toLowerCase().includes(search.toLowerCase())
-      );
+    ? customUserData.filter(x => x.FK_role_ID == sort)
+    : customUserData;
+
+  // const filter = sort
+  //   ? customUserData.filter(x => x.UserType == sort)
+  //   : customUserData.filter(
+  //       x =>
+  //         x.aname.toLowerCase().includes(search.toLowerCase()) ||
+  //         x.iname.toLowerCase().includes(search.toLowerCase())
+  //     );
 
   return (
     <Box w={'100%'}>
@@ -228,9 +87,9 @@ const User = () => {
         }}
       >
         <option value={''}>-- Sort --</option>
-        <option value={0}>Admin</option>
-        <option value={1}>Instructor</option>
-        <option value={2}>Client</option>
+        <option value={1}>Admin</option>
+        <option value={2}>Instructor</option>
+        <option value={3}>Client</option>
       </Select>
       <TableComponent
         columns={column}
@@ -239,8 +98,8 @@ const User = () => {
         setSearch={setSearch}
         placeholder={'Search name'}
         button={'User'}
-        AddNew={HandleAdd}
-        Update={HandleUpdate}
+        // AddNew={HandleAdd}
+        // Update={HandleUpdate}
         callBack={callBack}
         close={close}
         setClose={setClose}

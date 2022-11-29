@@ -3,7 +3,10 @@ import { Box, Flex, Heading, TableComponent, Text } from '../../Packages';
 import useMain from '../../Context/Main/MainContext';
 import { Post, Get, Put } from '../../API/Request_Format';
 import { useToast } from '@chakra-ui/react';
-import { InstructorPostRequest } from '../../API/Server_Request/Instructor_Request';
+import {
+  InstructorPostRequest,
+  InstructorPutRequest,
+} from '../../API/Server_Request/Instructor_Request';
 
 const Instructor = () => {
   const toast = useToast();
@@ -28,6 +31,7 @@ const Instructor = () => {
     notif,
     profileURL,
     setChangesInstructor,
+    updateID,
   } = useMain();
 
   const callBack = e => {
@@ -121,9 +125,8 @@ const Instructor = () => {
   };
 
   const HandleUpdate = async props => {
-    const request = await Put({
-      url: 'admin/user',
-      params: props.id,
+    const request = await InstructorPutRequest({
+      params: updateID,
       body: {
         Email: email,
         role: role,
@@ -167,7 +170,8 @@ const Instructor = () => {
   const filter = Instructor.filter(
     x =>
       x.Firstname.toLowerCase().includes(search.toLowerCase()) ||
-      x.Lastname.toLowerCase().includes(search.toLowerCase())
+      x.Lastname.toLowerCase().includes(search.toLowerCase()) ||
+      x.Middlename.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -180,24 +184,26 @@ const Instructor = () => {
         </Flex>
       </Box>
 
-      <TableComponent
-        columns={column}
-        data={filter}
-        search={search}
-        setSearch={setSearch}
-        placeholder={'Search name'}
-        button={'Instructor'}
-        AddNew={HandleAdd}
-        Update={HandleUpdate}
-        callBack={callBack}
-        close={close}
-        setClose={setClose}
-        loading={loading}
-        setLoading={setLoading}
-        setFetch={setFetch}
-        notif={notif}
-        sectionData={sections}
-      />
+      <Box style={{ overFlowX: 'scroll' }}>
+        <TableComponent
+          columns={column}
+          data={filter}
+          search={search}
+          setSearch={setSearch}
+          placeholder={'Search name'}
+          button={'Instructor'}
+          AddNew={HandleAdd}
+          Update={HandleUpdate}
+          callBack={callBack}
+          close={close}
+          setClose={setClose}
+          loading={loading}
+          setLoading={setLoading}
+          setFetch={setFetch}
+          notif={notif}
+          sectionData={sections}
+        />
+      </Box>
     </Box>
   );
 };

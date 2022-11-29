@@ -16,7 +16,13 @@ import {
 } from '../../API/Server_Request/Section_Request';
 import { useCookies } from 'react-cookie';
 
-import { ActiveUserGetRequest } from '../../API/Server_Request/User_Request';
+import {
+  ActiveUserGetRequest,
+  FetchUserData,
+  FetchCustomUser,
+} from '../../API/Server_Request/User_Request';
+
+import { BatchGetRequest } from '../../API/Server_Request/Batch_Request';
 
 const DataContext = createContext({});
 
@@ -43,13 +49,15 @@ export const MainProvider = ({ children }) => {
   const [role, setRole] = useState(0);
   const [profile, setProfile] = useState('');
   const [FK_section_ID, setFK_section_ID] = useState('');
+  const [userData, setUserData] = useState([]);
   const [PK_user_ID, setPK_user_ID] = useState('');
   const [verified, setVerified] = useState('');
-
+  const [customUserData, setCustomUserData] = useState([]);
   const [Instructor, setInstructor] = useState([]);
   const [notif, setNotif] = useState(false);
 
   const [InstructorSelection, setInstructorSelection] = useState([]);
+  const [batchData, setBatchData] = useState([]);
 
   const [Section, setSections] = useState([]);
 
@@ -61,6 +69,11 @@ export const MainProvider = ({ children }) => {
 
   const [updateID, setUpdateID] = useState();
   const [customSection, setCustomSections] = useState([]);
+
+  const [batchname, setBatchname] = useState('');
+  const [batchdescription, setBatchDescription] = useState('');
+  const [batchYear, setBatchyear] = useState('');
+
   const roleSelection = [
     {
       id: 1,
@@ -102,7 +115,6 @@ export const MainProvider = ({ children }) => {
         return 'failed';
       }
 
-      console.log(response);
       setNotif(true);
 
       const reduceData = response.data.data;
@@ -159,6 +171,9 @@ export const MainProvider = ({ children }) => {
     setSex('');
     setRole(0);
     setFK_section_ID('');
+    setBatchname('');
+    setBatchDescription('');
+    setBatchyear('');
   };
 
   const checkServerConnection = async () => {
@@ -212,9 +227,54 @@ export const MainProvider = ({ children }) => {
     }
   };
 
+  const fetchUserData = async () => {
+    try {
+      const userData = await FetchUserData({ params: {} });
+
+      if (userData.data.status === 500) {
+        return 'failed';
+      }
+
+      if (userData.data.status === 404) {
+        return 'failed';
+      }
+
+      setUserData(userData.data.data);
+
+      const userCustom = await FetchCustomUser({ params: {} });
+
+      if (userCustom.data.status === 500) {
+        return 'failed';
+      }
+
+      if (userCustom.data.status === 404) {
+        return 'failed';
+      }
+      setCustomUserData(userCustom.data.data);
+    } catch (error) {}
+  };
+
+  const fetchBatchData = async () => {
+    try {
+      const fbData = await BatchGetRequest({ params: {} });
+
+      if (fbData.data.status === 500) {
+        return 'failed';
+      }
+
+      if (fbData.data.status === 404) {
+        return 'failed';
+      }
+
+      setBatchData(fbData.data.data);
+    } catch (error) {}
+  };
+
   useEffect(() => {
     fetchInstructorData();
     fetchInstructorSelectionData();
+    fetchUserData();
+    fetchBatchData();
     setChangesInstructor(false);
   }, [changesInstructor]);
 
@@ -348,6 +408,18 @@ export const MainProvider = ({ children }) => {
         setUpdateID,
         customSection,
         setCustomSections,
+        userData,
+        setUserData,
+        customUserData,
+        setCustomUserData,
+        batchData,
+        setBatchData,
+        batchname,
+        setBatchname,
+        batchdescription,
+        setBatchDescription,
+        batchYear,
+        setBatchyear,
       }}
     >
       {children}

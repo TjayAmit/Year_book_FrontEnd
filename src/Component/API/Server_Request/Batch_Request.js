@@ -16,6 +16,10 @@ export const BatchPutRequest = async ({ params, body }) => {
   });
 };
 
+export const CustomSelectYear = async ({ params }) => {
+  return await Get({ url: 'batchCustomdate', params: params });
+};
+
 export const BatchDeleteRequest = async ({ params }) => {
   return await Delete({ url: 'batch', params: params });
 };

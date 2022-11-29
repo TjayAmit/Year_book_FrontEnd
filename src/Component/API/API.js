@@ -8,7 +8,7 @@ const api = new axios.create({
   headers: {
     Accept: 'application/json',
     'content-type': 'application/json',
-    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    //   Authorization: `Bearer ${sessionStorage.getItem('token')}`,
   },
 });
 //interceptor to rebuild for token configuration and authorization
