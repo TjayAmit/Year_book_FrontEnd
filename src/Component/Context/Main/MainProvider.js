@@ -5,6 +5,7 @@ import {
   RegisterRequest,
   LogoutRequest,
 } from '../../API/Server_Request/Authentication_Request';
+import { useNavigate } from 'react-router-dom';
 
 import {
   InstructorGetALLRequest,
@@ -28,10 +29,10 @@ const DataContext = createContext({});
 
 export const MainProvider = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
-
+  const navigate = useNavigate();
   const [fetch, setFetch] = useState(false);
   const [user, setUser] = useState({
-    loggedIn: true,
+    loggedIn: false,
     role: 0,
     name: 'Mang Juan',
   });
@@ -317,25 +318,7 @@ export const MainProvider = ({ children }) => {
     setChangesSection(false);
   }, [changesSection]);
 
-  const checkUser = async () => {
-    try {
-      const res = await ActiveUserGetRequest();
-      setUser(res.data.data);
-    } catch (e) {
-      setUser({
-        loggedIn: false,
-      });
-    }
-  };
-
   const [interval, setInterval] = useState(0);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     checkUser();
-  //     setInterval(5000);
-  //   }, [interval]);
-  // }, [user]);
 
   //Section
 
